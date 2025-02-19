@@ -8,47 +8,57 @@
 import SwiftUI
 
 struct ContentView: View {
-    
+    @State private var showSplash = true
+
     var body: some View {
-        SplashScreen()
+        ZStack {
+            LoginScreen()
+                .opacity(showSplash ? 0 : 1) // Fade in the login screen smoothly
+            
+            if showSplash {
+                SplashScreen(showSplash: $showSplash)
+            }
+        }
+        .animation(.easeInOut(duration: 0.5), value: showSplash) // Smooth transition
     }
 }
 
-struct SplashScreen: View{
-    
-    @State var splashAnimation: Bool = false
-    
+struct SplashScreen: View {
+    @Binding var showSplash: Bool
+    @State private var splashAnimation = false
+
     var body: some View {
         ZStack {
             LoginScreen()
                 .opacity(splashAnimation ? 1 : 0)
             
-            Color(.black)
+            Color.black
                 .mask {
                     Rectangle()
                         .overlay(
-//                            Image("img-Eventora")
                             Image("svg-img")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 200, height: 200)
-                                .scaleEffect(splashAnimation ? 170 :  1)
+                                .scaleEffect(splashAnimation ? 170 : 1)
                                 .blendMode(.destinationOut)
-                            
                         )
                 }
         }
         .ignoresSafeArea()
-//        .preferredColorScheme(splashAnimation ? nil : .light)
-        .onAppear{
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4){
-                withAnimation(.easeInOut(duration: 0.5)){
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                withAnimation(.easeInOut(duration: 0.9)) {
                     splashAnimation.toggle()
                 }
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                showSplash = false
             }
         }
     }
 }
+
 
 
 #Preview {
