@@ -9,7 +9,11 @@ import SwiftUI
 
 struct ForYouTabView: View {
     var body: some View {
-        Text("Git Settakkitund macha")
+        ScrollView {
+            VStack {
+                Text("For You")
+            }
+        }
     }
 }
 
