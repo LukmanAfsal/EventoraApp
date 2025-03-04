@@ -1,0 +1,221 @@
+//
+//  SignUpPage.swift
+//  EventoraApp
+//
+//  Created by jeboy on 13/02/25.
+//
+
+import SwiftUI
+
+struct SignUpPage: View {
+    @State private var fullName: String = ""
+    @State private var confirmPassword: String = ""
+    @StateObject private var viewModel = SignUpViewModel()
+    @EnvironmentObject private var router: Router
+    @State private var showValidationErrors: Bool = false
+    
+    @AppStorage("isloggedin") var isLoggedIn: Bool = false
+    
+    var body: some View {
+        ZStack {
+            VideoPlayerView(videoName: "PartyMood1")
+                .edgesIgnoringSafeArea(.all)
+            
+            VStack(spacing: 20) {
+                HStack {
+                    BackButton {
+                        router.navigateBack()
+                    }
+    
+                    Spacer()
+                    VStack {
+                        SkipButton()
+                            .onTapGesture {
+                                router.navigateToRoot()
+                            }
+                    }.padding()
+                }
+                
+                VStack {
+                    Image("img-Eventora3")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 270)
+                    Text("Discover | Book | Experience")
+                        .foregroundStyle(.white)
+                }
+                .padding(.top, 60)
+                
+                Spacer()
+                
+                VStack(spacing: 20) {
+                    Text("Create an Account")
+                        .bold()
+                        .font(.title2)
+                        .foregroundColor(.white)
+                    
+                    // Full Name Field with Error Message
+                    VStack(alignment: .leading, spacing: 4) {
+                        TextField(text: $fullName){
+                            Text("Full Name")
+                                .foregroundStyle(.gray.opacity(0.5))
+                        }
+                            .frame(height: 20)
+                            .padding()
+                            .background(Color.cgray)
+                            .foregroundStyle(.white)
+                            .cornerRadius(8)
+                            .padding(.horizontal, 20)
+                            .textContentType(.emailAddress)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(showValidationErrors && fullName.isEmpty ? Color.red : Color.purple, lineWidth: 1)
+                                    .padding(.horizontal, 20)
+                            )
+                        
+                        if showValidationErrors && fullName.isEmpty {
+                            Text("Full Name is required")
+                                .foregroundColor(.red)
+                                .font(.caption)
+                                .padding(.horizontal, 20)
+                        }
+                    }
+                    
+                    // Email Field with Error Message
+                    VStack(alignment: .leading, spacing: 4) {
+                        TextField(text: $viewModel.email){
+                            Text("Email")
+                                .foregroundStyle(.gray.opacity(0.5))
+                        }
+                            .frame(height: 20)
+                            .padding()
+                            .background(Color.cgray)
+                            .foregroundStyle(.white)
+                            .cornerRadius(8)
+                            .padding(.horizontal, 20)
+                            .textContentType(.emailAddress)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(showValidationErrors && viewModel.email.isEmpty ? Color.red : Color.purple, lineWidth: 1)
+                                    .padding(.horizontal, 20)
+                            )
+                        
+                        if showValidationErrors && viewModel.email.isEmpty {
+                            Text("Email is required")
+                                .foregroundColor(.red)
+                                .font(.caption)
+                                .padding(.horizontal, 20)
+                        }
+                    }
+                    
+                    // Password Field with Error Message
+                    VStack(alignment: .leading, spacing: 4) {
+                        SecureField(text: $viewModel.password){
+                            Text("Passwoed")
+                                .foregroundStyle(.gray.opacity(0.5))
+                        }
+                            .frame(height: 20)
+                            .padding()
+                            .background(Color.cgray)
+                            .foregroundStyle(.white)
+                            .cornerRadius(8)
+                            .padding(.horizontal, 20)
+                            .textContentType(.emailAddress)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(showValidationErrors && viewModel.password.isEmpty ? Color.red : Color.purple, lineWidth: 1)
+                                    .padding(.horizontal, 20)
+                            )
+                        
+                        if showValidationErrors && viewModel.password.isEmpty {
+                            Text("Password is required")
+                                .foregroundColor(.red)
+                                .font(.caption)
+                                .padding(.horizontal, 20)
+                        }
+                    }
+                    
+                    // Confirm Password Field with Error Message
+                    VStack(alignment: .leading, spacing: 4) {
+                        SecureField(text: $confirmPassword){
+                            Text("Confirm Password")
+                                .foregroundStyle(.gray.opacity(0.5))
+                        }
+                            .frame(height: 20)
+                            .padding()
+                            .background(Color.cgray)
+                            .foregroundStyle(.white)
+                            .cornerRadius(8)
+                            .padding(.horizontal, 20)
+                            .textContentType(.emailAddress)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(showValidationErrors && confirmPassword.isEmpty ? Color.red : Color.purple, lineWidth: 1)
+                                    .padding(.horizontal, 20)
+                            )
+                        
+                        if showValidationErrors && confirmPassword.isEmpty {
+                            Text("Confirm Password is required")
+                                .foregroundColor(.red)
+                                .font(.caption)
+                                .padding(.horizontal, 20)
+                        } else if showValidationErrors && viewModel.password != confirmPassword {
+                            Text("Passwords do not match")
+                                .foregroundColor(.red)
+                                .font(.caption)
+                                .padding(.horizontal, 20)
+                        }
+                    }
+                    
+                    // General Error Message (if any)
+                    if let errorMessage = viewModel.errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .font(.caption)
+                            .padding(.horizontal, 20)
+                    }
+                    
+                    // Sign Up Button
+                    Button(action: {
+                        if fullName.isEmpty || viewModel.email.isEmpty || viewModel.password.isEmpty || confirmPassword.isEmpty || viewModel.password != confirmPassword {
+                            showValidationErrors = true
+                        } else {
+                            Task {
+                                await viewModel.signUp()
+                            }
+                        }
+                    }) {
+                        Text("Sign Up")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.purple)
+                            .cornerRadius(8)
+                            .padding(.horizontal, 20)
+                    }
+                    .onChange(of: viewModel.isSignInSuccess) { oldValue, newValue in
+                        isLoggedIn = true
+                        router.navigateToRoot()
+                    }
+                    
+                    // Login Link
+                    HStack {
+                        Text("Already have an account?")
+                            .foregroundStyle(Color.white)
+                        Button("Login") {
+                            router.navigateToRoot()
+                        }
+                        .foregroundStyle(.cpurple)
+                    }
+                    .padding(.bottom, 30)
+                }
+            }
+        }.navigationBarBackButtonHidden(true)
+    }
+}
+
+#Preview {
+    SignUpPage()
+        .environmentObject(Router())
+}

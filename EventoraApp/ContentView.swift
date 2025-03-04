@@ -7,20 +7,24 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    
-    var body: some View {
-        SplashScreen()
-    }
-}
-
+//struct ContentView: View {
+//    @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
+//    
+//    var body: some View {
+//        
+//        LoginScreen(skippedOnboarding: .constant(false), loginSuccessful: .constant(true))
+//        
+//    }
+//    
+//}
+//
 struct SplashScreen: View{
     
     @State var splashAnimation: Bool = false
     
     var body: some View {
         ZStack {
-            LoginScreen()
+            LoginScreen(skippedOnboarding: .constant(false), loginSuccessful: .constant(false))
                 .opacity(splashAnimation ? 1 : 0)
             
             Color(.black)
@@ -52,7 +56,7 @@ struct SplashScreen: View{
 
 
 #Preview {
-    ContentView()
+    SplashScreen()
 }
 
 

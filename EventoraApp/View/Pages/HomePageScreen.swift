@@ -9,46 +9,54 @@
 import SwiftUI
 
 struct HomePageScreen: View {
+    
+    @State private var selectedTab: AuraTab = .forYou
+    @State private var isLocationPresented = false
+    @State private var showSignInView: Bool = false
+    @EnvironmentObject private var router :Router
+    @AppStorage("skippedOnboarding") var skippedOnboarding: Bool = false
+    @AppStorage("isloggedin") var isLoggedIn: Bool = false
+    
     var body: some View {
-        NavigationStack{
+        NavigationStack(path: $router.navPath) {
             ZStack{
-                ForYouColor()
+                BackgroundRadient(gradientColor: selectedTab.gradientColor)
                 VStack {
                     HStack {
-                        NavigationLink(destination: LocationDetailPage()){
+                        Button(action: {
+                            isLocationPresented.toggle()
+                        }) {
                             HStack{
                                 Image(systemName: "location.circle.fill")
                                     .foregroundStyle(.gray)
                                     .font(.system(size: 35))
                                 
-                                VStack {
+                                VStack(alignment: .leading) {
                                     Text("Koratty Infopark")
                                         .font(.system(size: 20))
                                         .bold()
                                         .foregroundStyle(.white)
                                     Text("Koratty, Kerala")
                                         .font(.system(size: 15))
-                                    //                        .multilineTextAlignment(.leading)
                                         .bold()
                                         .foregroundStyle(.white)
-                                        .padding(.trailing, 40)
                                 }
                                 Image(systemName: "chevron.down")
                                     .foregroundStyle(.white)
                                     .font(.system(size: 15))
                                     .bold()
-                                    .padding(.bottom)
                             }
                         }
                         Spacer()
-                        NavigationLink(destination: ProfilePage()) {
+                        Button(action: {
+                            router.navigate(to: .profile)
+                        }) {
                             Image(systemName: "person.crop.circle.fill")
                                 .foregroundStyle(.gray)
                                 .font(.system(size: 40))
-                        }
-                    }
+                        }}
                     .padding(.horizontal,15)
-                
+                    
                     NavigationLink(destination: SearchPage()) {
                         ZStack{
                             Rectangle()
@@ -60,11 +68,10 @@ struct HomePageScreen: View {
                                         .stroke(Color.cgray2, lineWidth: 2)
                                 )
                             
-                            
                             HStack{
                                 Image(systemName: "magnifyingglass")
                                     .foregroundStyle(.gray)
-                                Text("Search your event here")
+                                Text(selectedTab.searchPlaceHolder)
                                     .foregroundStyle(.gray)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
@@ -72,22 +79,53 @@ struct HomePageScreen: View {
                         }
                     }
                     
-                    TabView{
-                        ScrollView{
-                            ForYouTabView()
-                                .tabItem{
-                                    Text("Log")
-                                }}
+                    VStack(spacing: 0) {
+                        switch selectedTab {
+                        case .forYou: ForYouTabView()
+                        case .events: EventsTab()
+                        case .movies: MoviesTab()
+                        case .sport: DiningTab()
+                        }
                         
+                        CustomTabBar(selectedTab: $selectedTab)
                     }
+                }
+                .onAppear{
+                    let authUser = try? AuthenticationManager.shared.getAuthenticatedUser()
+                    //self.showSignInView = authUser == nil ? true : false
+                    
+                }
+                
+                if (isLoggedIn == false && skippedOnboarding  == false) && skippedOnboarding == false {
+                    
+                    LoginScreen(skippedOnboarding: $skippedOnboarding, loginSuccessful: $isLoggedIn)
                     
                 }
             }
-            
+            .fullScreenCover(isPresented: $isLocationPresented){
+                LocationDetailPage()
+            }
+            .toolbarVisibility(.hidden, for: .navigationBar)
+            .navigationDestination(for: NavDestination.self) { destination in
+                switch destination {
+                case .login:
+                    LoginScreen(skippedOnboarding: $skippedOnboarding,loginSuccessful: $isLoggedIn)
+                case .signUp:
+                    SignUpPage()
+                case .home:
+                    HomePageScreen()
+                case .profile:
+                    ProfilePage()
+                    
+                }
+            }
         }
+        .environmentObject(router)
     }
 }
 
+
 #Preview {
     HomePageScreen()
+        .environmentObject(Router())
 }
