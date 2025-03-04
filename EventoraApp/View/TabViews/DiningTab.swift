@@ -9,10 +9,21 @@ import SwiftUI
 
 struct DiningTab: View {
     var body: some View {
-            Color.black
-                .ignoresSafeArea(.all)
+        ZStack {
+            Color.black // Black background
+                .ignoresSafeArea()
+
+            Text("Dining")
+                .foregroundColor(.white)
+                .padding()
+            
+                
+                //.background(.green)
+                .font(.title)
+                .bold()
         }
     }
+}
 
 #Preview {
     DiningTab()

@@ -9,8 +9,15 @@ import SwiftUI
 
 struct MoviesTab: View {
     var body: some View {
-        Color.black
-            .ignoresSafeArea(.all)
+        ZStack {
+            Color.black
+                .ignoresSafeArea()
+
+            Text("Movies")
+                .foregroundColor(.white)
+                .font(.title)
+                .bold()
+        }
     }
 }
 
