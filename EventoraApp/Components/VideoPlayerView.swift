@@ -5,47 +5,62 @@
 //  Created by jeboy on 13/02/25.
 //
 
+
+
+
 import SwiftUI
 import AVKit
 
 struct VideoPlayerView: UIViewRepresentable {
     var videoName: String
 
-    func makeUIView(context: Context) -> UIView {
-        let view = UIView()
-
-        // Get the path to the video file
-        guard let path = Bundle.main.path(forResource: videoName, ofType: "mp4") else {
-            print("Error: Video file not found")
-            return view
-        }
-        print("Video file found at path: \(path)")
-
-        // Create an AVPlayer with the video URL
-        let url = URL(fileURLWithPath: path)
-        let player = AVPlayer(url: url)
-//        player.actionAtItemEnd = .none
-
-        // Create an AVPlayerLayer and add it to the view
-        let playerLayer = AVPlayerLayer(player: player)
-        playerLayer.frame = UIScreen.main.bounds
-        playerLayer.videoGravity = .resizeAspectFill
-        view.layer.addSublayer(playerLayer)
-
-        // Loop the video
-        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { _ in
-            player.seek(to: .zero)
-            player.play()
-        }
-
-        // Start playing the video
-        player.play()
-
+    func makeUIView(context: Context) -> PlayerUIView {
+        let view = PlayerUIView(videoName: videoName)
         return view
     }
 
-    func updateUIView(_ uiView: UIView, context: Context) {
-        // Update the view if needed
+    func updateUIView(_ uiView: PlayerUIView, context: Context) {
+        // Update if needed
+    }
+}
+
+class PlayerUIView: UIView {
+    private var playerLayer = AVPlayerLayer()
+    private var player: AVPlayer?
+
+    init(videoName: String) {
+        super.init(frame: .zero)
+        setupPlayer(with: videoName)
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+    private func setupPlayer(with videoName: String) {
+        guard let path = Bundle.main.path(forResource: videoName, ofType: "mp4") else {
+            print("Error: Video file not found")
+            return
+        }
+
+        let url = URL(fileURLWithPath: path)
+        player = AVPlayer(url: url)
+        playerLayer.player = player
+        playerLayer.videoGravity = .resizeAspectFill  // Change to .resize if you want it fully inside
+        layer.addSublayer(playerLayer)
+
+        // Loop the video
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player?.currentItem, queue: .main) { _ in
+            self.player?.seek(to: .zero)
+            self.player?.play()
+        }
+
+        player?.play()
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        playerLayer.frame = bounds  // Update frame to match the SwiftUI-provided size
     }
 }
 

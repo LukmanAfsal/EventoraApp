@@ -13,13 +13,12 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             LoginScreen()
-                .opacity(showSplash ? 0 : 1) // Fade in the login screen smoothly
-            
+                .opacity(showSplash ? 0 : 1)
             if showSplash {
                 SplashScreen(showSplash: $showSplash)
             }
         }
-        .animation(.easeInOut(duration: 0.5), value: showSplash) // Smooth transition
+        .animation(.easeInOut(duration: 0.9), value: showSplash)
     }
 }
 

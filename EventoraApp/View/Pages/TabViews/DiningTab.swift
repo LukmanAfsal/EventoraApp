@@ -9,7 +9,19 @@ import SwiftUI
 
 struct DiningTab: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color.black // Black background
+                .ignoresSafeArea()
+
+            Text("Dining")
+                .foregroundColor(.white)
+                .padding()
+            
+                
+                //.background(.green)
+                .font(.title)
+                .bold()
+        }
     }
 }
 

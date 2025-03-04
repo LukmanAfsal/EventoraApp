@@ -40,10 +40,13 @@ struct SignUpPage: View {
                             .font(.title2)
                             .foregroundColor(.white)
                         
-                        TextField("Username", text: $username)
+                        TextField(text: $username){
+                            Text("Username")
+                                .foregroundStyle(.gray)
+                        }
                             .padding()
                             .foregroundStyle(.white)
-                            .background(Color.white.opacity(0.4))
+                            .background(Color.cgray.opacity(0.4))
                             .cornerRadius(8)
                             .padding(.horizontal, 20)
                             .overlay(
@@ -52,10 +55,13 @@ struct SignUpPage: View {
                                     .padding(.horizontal, 20)
                             )
                         
-                        TextField("Email", text: $email)
+                        TextField(text: $email){
+                            Text("Email")
+                                .foregroundStyle(.gray)
+                        }
                             .padding()
                             .foregroundStyle(.white)
-                            .background(Color.white.opacity(0.4))
+                            .background(Color.cgray.opacity(0.4))
                             .cornerRadius(8)
                             .padding(.horizontal, 20)
                             .overlay(
@@ -64,10 +70,13 @@ struct SignUpPage: View {
                                     .padding(.horizontal, 20)
                             )
                         
-                        SecureField("Password", text: $password)
+                        SecureField(text: $password){
+                            Text("Password")
+                                .foregroundStyle(.gray)
+                        }
                             .padding()
                             .foregroundStyle(.white)
-                            .background(Color.white.opacity(0.4))
+                            .background(Color.cgray.opacity(0.4))
                             .cornerRadius(8)
                             .padding(.horizontal, 20)
                             .overlay(
@@ -76,10 +85,13 @@ struct SignUpPage: View {
                                     .padding(.horizontal, 20)
                             )
                         
-                        SecureField("Confirm Password", text: $confirmPassword)
+                        SecureField(text: $confirmPassword){
+                            Text("Confirm Passwor")
+                                .foregroundStyle(.gray)
+                        }
                             .padding()
                             .foregroundStyle(.white)
-                            .background(Color.white.opacity(0.4))
+                            .background(Color.cgray.opacity(1))
                             .cornerRadius(8)
                             .padding(.horizontal, 20)
                             .overlay(

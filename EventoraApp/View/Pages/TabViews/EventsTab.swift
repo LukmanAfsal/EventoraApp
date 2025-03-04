@@ -9,8 +9,14 @@ import SwiftUI
 
 struct EventsTab: View {
     var body: some View {
-        ScrollView {
+        ZStack {
+            Color.black
+                .ignoresSafeArea()
+
             Text("Events Available")
+                .foregroundColor(.white)
+                .font(.title)
+                .bold()
         }
     }
 }

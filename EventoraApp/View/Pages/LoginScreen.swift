@@ -49,7 +49,7 @@ struct LoginScreen: View {
                             .foregroundColor(.white)
 
                         // Username Field
-                        TextField("Username", text: $username)
+                        TextField("", text: $username, prompt: Text("Username").foregroundStyle(.gray))
                             .padding()
                             .background(Color.cgray)
                             .foregroundStyle(.white)
@@ -64,9 +64,9 @@ struct LoginScreen: View {
                         // Password Field with Eye Icon
                         ZStack(alignment: .trailing) {
                             if showPassword {
-                                TextField("Password", text: $password)
+                                TextField("", text: $password, prompt: Text("Password").foregroundStyle(.gray))
                             } else {
-                                SecureField("Password", text: $password)
+                                SecureField("Password", text: $password, prompt: Text("Password").foregroundStyle(.gray))
                             }
                             Button(action: {
                                 showPassword.toggle()

@@ -1,0 +1,99 @@
+{
+  "spotlight": {
+    "title": "Rock On Harris - CBE Edition",
+    "location": "Kozhikode",
+    "time": "6:30 PM",
+    "date": "MON, 12 FEB",
+    "gatesOpenTime": "4:30 PM",
+    "price": 1499,
+    "image": "https://media.insider.in/image/upload/c_crop,g_custom/v1738325992/lzshffskkim5c3udn5el.jpg",
+    "distance": "5.2 km away",
+    "description": "Rock On Harris - CBE Edition brings the ultimate musical experience to Kozhikode. Join us for an unforgettable evening of rock music featuring Harris and his band. The event will showcase both classic hits and new compositions in a spectacular venue with state-of-the-art sound.",
+    "artist": {
+      "name": "Harris Jayaraj",
+      "image": "https://media.insider.in/image/upload/c_crop,g_custom/v1738325992/artistharris.jpg"
+    }a
+  },
+  "bestOfIndia": [
+    {
+      "id": "1",
+      "image": "https://media.insider.in/image/upload/c_crop,g_custom/v1738325992/lzshffskkim5c3udn5el.jpg",
+      "title": "Rockstar DSP LIVE in Bengaluru",
+      "date": "MON, 12 FEB",
+      "location": "Nice Ground, Bengaluru",
+      "gatesOpenTime": "4:30 PM",
+      "time": "6:30 PM",
+      "price": 1999,
+      "distance": "2.5 km away",
+      "description": "Devi Sri Prasad, popularly known as Rockstar DSP, is set to electrify Bengaluru with his high-energy performance. Experience the magic of his film hits and independent tracks live with a full orchestra and spectacular dance performances.",
+      "artist": {
+        "name": "Devi Sri Prasad",
+        "image": "https://media.insider.in/image/upload/c_crop,g_custom/v1738325992/artistdsp.jpg"
+      }
+    },
+    {
+      "id": "2",
+      "image": "https://media.insider.in/image/upload/c_crop,g_custom/v1736567930/usxqkhcvvuih8lqzxifp.jpg",
+      "title": "Arijit Singh Concert - Mumbai",
+      "date": "FRI, 22 MAR",
+      "location": "Bandra Stadium, Mumbai",
+      "gatesOpenTime": "5:00 PM",
+      "time": "7:00 PM",
+      "price": 2499,
+      "distance": "8.7 km away",
+      "description": "Arijit Singh, the voice that has captured millions of hearts, brings his soulful melodies to Mumbai. Join the musical journey through his greatest hits and experience the emotion and passion that defines his music in this intimate concert setting.",
+      "artist": {
+        "name": "Arijit Singh",
+        "image": "https://media.insider.in/image/upload/c_crop,g_custom/v1736567930/artistarijit.jpg"
+      }
+    },
+    {
+      "id": "3",
+      "image": "https://media.insider.in/image/upload/c_crop,g_custom/v1740247759/g05xjdpffbfwkvkm1pva.jpg",
+      "title": "Sunburn Festival Goa 2025",
+      "date": "SAT, 15 DEC",
+      "location": "Vagator Beach, Goa",
+      "gatesOpenTime": "2:00 PM",
+      "time": "4:00 PM",
+      "price": 3999,
+      "distance": "15.3 km away",
+      "description": "Sunburn Goa, Asia's premiere electronic dance music festival, returns to the beaches of Vagator for its 2025 edition. Experience three days of music, featuring the world's top DJs, stunning visual productions, and the magical Goa atmosphere.",
+      "artist": {
+        "name": "Multiple Artists",
+        "image": "https://media.insider.in/image/upload/c_crop,g_custom/v1740247759/artistsunburn.jpg"
+      }
+    },
+    {
+      "id": "4",
+      "image": "https://media.insider.in/image/upload/c_crop,g_custom/v1739269826/rm6zo7n5enbzveodh6vy.jpg",
+      "title": "Tomorrowland India Experience",
+      "date": "WED, 10 JUL",
+      "location": "Yelahanka Air Base, Bengaluru",
+      "gatesOpenTime": "3:00 PM",
+      "time": "5:00 PM",
+      "price": 4999,
+      "distance": "12.1 km away",
+      "description": "Tomorrowland, the world's most magical festival, comes to India for an extraordinary experience. The legendary Belgian festival brings its incredible production, immersive themes, and spectacular lineup to create an unforgettable journey for music lovers.",
+      "artist": {
+        "name": "International DJs",
+        "image": "https://media.insider.in/image/upload/c_crop,g_custom/v1739269826/artisttomorrowland.jpg"
+      }
+    },
+    {
+      "id": "5",
+      "image": "https://media.insider.in/image/upload/c_crop,g_custom/v1737472288/q1oua81idbw854hegt7t.png",
+      "title": "Sunburn Festival Goa 2025",
+      "date": "SAT, 15 DEC",
+      "location": "Vagator Beach, Goa",
+      "gatesOpenTime": "2:00 PM",
+      "time": "4:00 PM",
+      "price": 3999,
+      "distance": "15.3 km away",
+      "description": "Sunburn Goa, Asia's premiere electronic dance music festival, returns to the beaches of Vagator for its 2025 edition. Experience three days of music, featuring the world's top DJs, stunning visual productions, and the magical Goa atmosphere.",
+      "artist": {
+        "name": "Multiple Artists",
+        "image": "https://media.insider.in/image/upload/c_crop,g_custom/v1737472288/artistsunburn2.jpg"
+      }
+    }
+  ]
+}
