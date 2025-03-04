@@ -12,11 +12,14 @@ struct DiningTab: View {
         ZStack {
             Color.black // Black background
                 .ignoresSafeArea()
-
-            Text("Dining")
-                .foregroundColor(.white)
-                .padding()
-            
+            VStack{
+                Text("Dining")
+                    .foregroundColor(.white)
+                    .padding()
+                Text("abhis change")
+                    .foregroundColor(.white)
+                    .padding()
+            }
                 
                 //.background(.green)
                 .font(.title)
