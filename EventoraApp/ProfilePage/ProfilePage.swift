@@ -29,6 +29,16 @@ struct ProfilePage: View {
                             }
                         }
                     }
+                    Button("Delete") {
+                        Task {
+                            do {
+                                //try to delete User
+                                // Navigate back to login screen
+                            } catch {
+                                print(error)
+                            }
+                        }
+                    }
                 }
             } else {
                 // Show LoginPromptScreen if user is not logged in
