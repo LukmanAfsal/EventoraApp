@@ -10,11 +10,17 @@ import SwiftUI
 
 struct EventsTab: View {
     var body: some View {
+        ZStack {
             Color.black
-                .ignoresSafeArea(.all)
+                .ignoresSafeArea()
+
+            Text("Events Available")
+                .foregroundColor(.white)
+                .font(.title)
+                .bold()
         }
     }
-
+}
 
 #Preview {
     EventsTab()
