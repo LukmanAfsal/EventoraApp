@@ -20,6 +20,14 @@ struct DiningTab: View {
                     .foregroundColor(.white)
                     .padding()
             }
+
+            Text("Dining")
+                .foregroundColor(.white)
+                .padding()
+            Text("lukmans change")
+                .foregroundColor(.white)
+                .padding()
+            
                 
                 //.background(.green)
                 .font(.title)
