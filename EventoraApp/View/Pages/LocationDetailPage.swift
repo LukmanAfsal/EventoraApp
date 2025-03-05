@@ -2,15 +2,20 @@
 //  LocationDetailPage.swift
 //  EventoraApp
 //
-//  Created by jeboy on 14/02/25.
+//  Created by Abhinand K J on 14/02/25.
 //
 
 import SwiftUI
 
+// MARK: - LocationDetailPage View
 struct LocationDetailPage: View {
+    // MARK: - Environment
     @Environment(\.dismiss) var dismiss
+    
+    // MARK: - State
     @State private var locationName: String = ""
     
+    // MARK: - Data
     let places = ["Delhi NCR", "Hydrabad", "Kolkata", "Pune", "Goa", "Bangaluru", "Mumbai", "Chandigarh", "Ahmedabadh", "Chennai"]
     let indianCities: [String] = [
         "Mumbai",
@@ -29,17 +34,19 @@ struct LocationDetailPage: View {
         "Visakhapatnam",
         "Thiruvananthapuram"
     ]
-
     
+    // MARK: - Layout
     let columns = [GridItem(.fixed(100)), GridItem(.fixed(100))]
-
+    
     var body: some View {
         ZStack {
+            // MARK: - Background
             Color.black.edgesIgnoringSafeArea(.all)
+            
             VStack {
-                
+                // MARK: - Header
                 HStack {
-                    Button(action: {dismiss()}) {
+                    Button(action: { dismiss() }) {
                         Image(systemName: "chevron.down")
                             .bold()
                     }
@@ -51,37 +58,29 @@ struct LocationDetailPage: View {
                         .bold()
                         .font(.system(size: 25))
                         .foregroundStyle(.white)
+                    
                     Spacer()
-                                                
                 }
                 .padding(.horizontal, -2)
                 
+                // MARK: - Search Field
                 TextField(
                     "",
                     text: $locationName,
-                    prompt: Text(
-                        "Search city,area or locality"
-                    ).foregroundStyle(
-                        .gray
-                    )
+                    prompt: Text("Search city, area or locality").foregroundStyle(.gray)
                 )
-                    .padding()
-                    .background(Color.cgray)
-                    .foregroundStyle(.white)
-                    .cornerRadius(15)
-                    .padding(.horizontal, 10)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 15)
-                            .stroke(Color.gray, lineWidth: 1)
-                            .padding(.horizontal, 10)
-                    )
+                .padding()
+                .background(Color.cgray)
+                .foregroundStyle(.white)
+                .cornerRadius(15)
+                .padding(.horizontal, 10)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 15)
+                        .stroke(Color.gray, lineWidth: 1)
+                        .padding(.horizontal, 10)
+                )
                 
-//                TextField(text:$locationName) {
-//                    Text("loc")
-//                        .foregroundStyle(.white)
-//                }
-//                .foregroundStyle(.white)
-                
+                // MARK: - Current Location Button
                 Button(action: {}) {
                     HStack {
                         Image(systemName: "location.viewfinder")
@@ -111,6 +110,7 @@ struct LocationDetailPage: View {
                     .padding(.horizontal, 10)
                 }
                 
+                // MARK: - Popular Cities Section
                 HStack {
                     Text("Popular cities")
                         .bold()
@@ -122,6 +122,7 @@ struct LocationDetailPage: View {
                 }
                 .padding(.horizontal)
                 .padding(.bottom, -10)
+                
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHGrid(rows: columns, spacing: 10) {
                         ForEach(places, id: \.self) { place in
@@ -131,11 +132,13 @@ struct LocationDetailPage: View {
                                 .frame(width: 120, height: 100)
                                 .background(Color.gray.opacity(0.3))
                                 .cornerRadius(10)
-                                }
                         }
-                            .padding(.horizontal, 10)
-                            .padding(.top, 20)
-            }
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.top, 20)
+                }
+                
+                // MARK: - All Cities Section
                 HStack {
                     Text("All cities")
                         .bold()
@@ -146,21 +149,13 @@ struct LocationDetailPage: View {
                 .padding(.top, 24)
                 .padding()
                 
-                
-                
-                
-                
-                
-                
-       
-                
-    
                 Spacer()
             }
         }
     }
 }
 
+// MARK: - Preview
 #Preview {
     LocationDetailPage()
 }

@@ -7,23 +7,32 @@
 
 import SwiftUI
 
+// MARK: - Screen Dimensions
 let screenHeight = UIScreen.main.bounds.height
 let screenWidth = UIScreen.main.bounds.width
 
+// MARK: - EventDetailsPage View
 struct EventDetailsPage: View {
+    // MARK: - State
     @State private var isExpanded = false
+    
+    // MARK: - Environment
     @Environment(\.presentationMode) var presentationMode
     
+    // MARK: - Properties
     let event: EvntoraEvent
     
     var body: some View {
         ZStack(alignment: .top) {
+            // MARK: - Background
             Color.black.ignoresSafeArea()
             
+            // MARK: - Scrollable Content
             ScrollView {
                 Spacer().frame(height: 110)
                 
                 VStack(spacing: 20) {
+                    // MARK: - Event Image
                     if let url = URL(string: event.image) {
                         AsyncImage(url: url) { phase in
                             switch phase {
@@ -50,18 +59,21 @@ struct EventDetailsPage: View {
                             .cornerRadius(15)
                     }
                     
+                    // MARK: - Event Title
                     Text(event.title)
                         .fontWeight(.bold)
                         .lineLimit(2)
                         .foregroundStyle(.white)
                         .font(.system(size: 25))
                     
+                    // MARK: - Event Details Card
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
                             .fill(Color("cgray"))
                             .frame(width: 390)
                         
                         VStack(alignment: .leading, spacing: 0) {
+                            // Date and Time
                             HStack {
                                 Image(systemName: "calendar.badge.clock")
                                     .foregroundStyle(.gray)
@@ -88,10 +100,11 @@ struct EventDetailsPage: View {
                             }
                             .padding()
                             .frame(maxWidth: .infinity, alignment: .leading)
-
+                            
                             Divider()
                                 .background(Color.gray)
-
+                            
+                            // Location
                             HStack {
                                 Image(systemName: "location.north")
                                     .foregroundStyle(.gray)
@@ -110,7 +123,7 @@ struct EventDetailsPage: View {
                                 }
                                 Spacer()
                                 
-                                Button(action:{}) {
+                                Button(action: {}) {
                                     Image(systemName: "arrow.turn.up.right")
                                         .foregroundStyle(.white)
                                         .font(.system(size: 20))
@@ -123,6 +136,7 @@ struct EventDetailsPage: View {
                     }
                     .frame(width: 390)
                     
+                    // MARK: - About Section
                     VStack(alignment: .leading) {
                         HStack {
                             Text("About")
@@ -139,7 +153,7 @@ struct EventDetailsPage: View {
                             .lineLimit(isExpanded ? nil : 4)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(5)
-            
+                        
                         Button(action: {
                             withAnimation {
                                 isExpanded.toggle()
@@ -155,6 +169,7 @@ struct EventDetailsPage: View {
                     }
                     .padding(1)
                     
+                    // MARK: - Artist Section
                     VStack(alignment: .leading) {
                         HStack {
                             Text("Artist")
@@ -212,6 +227,7 @@ struct EventDetailsPage: View {
             }
             .ignoresSafeArea()
             
+            // MARK: - Top Navigation Bar
             VStack {
                 HStack {
                     Button(action: {
@@ -222,7 +238,7 @@ struct EventDetailsPage: View {
                             .font(.system(size: 24))
                     }
                     Spacer()
-                    Button(action:{}) {
+                    Button(action: {}) {
                         Image(systemName: "square.and.arrow.up")
                             .foregroundStyle(.white)
                             .font(.system(size: 21))
@@ -235,6 +251,7 @@ struct EventDetailsPage: View {
                 )
             }
             
+            // MARK: - Bottom Booking Bar
             VStack {
                 Spacer()
                 
@@ -281,18 +298,8 @@ struct EventDetailsPage: View {
     }
 }
 
-struct BlurView: UIViewRepresentable {
-    var style: UIBlurEffect.Style
-    
-    func makeUIView(context: Context) -> UIVisualEffectView {
-        return UIVisualEffectView(effect: UIBlurEffect(style: style))
-    }
-    
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
-        uiView.effect = UIBlurEffect(style: style)
-    }
-}
 
+// MARK: - Preview
 #Preview {
     let sampleEvent = EvntoraEvent(
         id: "1",
@@ -308,6 +315,5 @@ struct BlurView: UIViewRepresentable {
         artist: Artist(name: "Sample Artist", image: "https://assetscdn1.paytm.com/images/cinema/Kunchacko-Boban-ed0ea550-9185-11eb-b324-e3ae738e1ebb.jpg?format=webp&imwidth=64")
     )
     
-    EventDetailsPage(event: sampleEvent)
+    return EventDetailsPage(event: sampleEvent)
 }
-

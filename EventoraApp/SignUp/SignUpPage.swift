@@ -2,40 +2,48 @@
 //  SignUpPage.swift
 //  EventoraApp
 //
-//  Created by jeboy on 13/02/25.
+//  Created by Abhinand K J on 13/02/25.
 //
 
 import SwiftUI
 
+// MARK: - SignUpPage View
 struct SignUpPage: View {
+    // MARK: - State Properties
     @State private var fullName: String = ""
     @State private var confirmPassword: String = ""
     @StateObject private var viewModel = SignUpViewModel()
     @EnvironmentObject private var router: Router
     @State private var showValidationErrors: Bool = false
     
+    // MARK: - AppStorage
     @AppStorage("isloggedin") var isLoggedIn: Bool = false
     
     var body: some View {
         ZStack {
+            // MARK: - Background Video
             VideoPlayerView(videoName: "PartyMood1")
                 .edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 20) {
+                // MARK: - Header (Back and Skip Buttons)
                 HStack {
                     BackButton {
                         router.navigateBack()
                     }
-    
+                    
                     Spacer()
+                    
                     VStack {
                         SkipButton()
                             .onTapGesture {
                                 router.navigateToRoot()
                             }
-                    }.padding()
+                    }
+                    .padding()
                 }
                 
+                // MARK: - Logo and Tagline
                 VStack {
                     Image("img-Eventora3")
                         .resizable()
@@ -48,30 +56,31 @@ struct SignUpPage: View {
                 
                 Spacer()
                 
+                // MARK: - Sign Up Form
                 VStack(spacing: 20) {
                     Text("Create an Account")
                         .bold()
                         .font(.title2)
                         .foregroundColor(.white)
                     
-                    // Full Name Field with Error Message
+                    // MARK: - Full Name Field
                     VStack(alignment: .leading, spacing: 4) {
-                        TextField(text: $fullName){
+                        TextField(text: $fullName) {
                             Text("Full Name")
                                 .foregroundStyle(.gray.opacity(0.5))
                         }
-                            .frame(height: 20)
-                            .padding()
-                            .background(Color.cgray)
-                            .foregroundStyle(.white)
-                            .cornerRadius(8)
-                            .padding(.horizontal, 20)
-                            .textContentType(.emailAddress)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(showValidationErrors && fullName.isEmpty ? Color.red : Color.purple, lineWidth: 1)
-                                    .padding(.horizontal, 20)
-                            )
+                        .frame(height: 20)
+                        .padding()
+                        .background(Color.cgray)
+                        .foregroundStyle(.white)
+                        .cornerRadius(8)
+                        .padding(.horizontal, 20)
+                        .textContentType(.emailAddress)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(showValidationErrors && fullName.isEmpty ? Color.red : Color.purple, lineWidth: 1)
+                                .padding(.horizontal, 20)
+                        )
                         
                         if showValidationErrors && fullName.isEmpty {
                             Text("Full Name is required")
@@ -81,24 +90,24 @@ struct SignUpPage: View {
                         }
                     }
                     
-                    // Email Field with Error Message
+                    // MARK: - Email Field
                     VStack(alignment: .leading, spacing: 4) {
-                        TextField(text: $viewModel.email){
+                        TextField(text: $viewModel.email) {
                             Text("Email")
                                 .foregroundStyle(.gray.opacity(0.5))
                         }
-                            .frame(height: 20)
-                            .padding()
-                            .background(Color.cgray)
-                            .foregroundStyle(.white)
-                            .cornerRadius(8)
-                            .padding(.horizontal, 20)
-                            .textContentType(.emailAddress)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(showValidationErrors && viewModel.email.isEmpty ? Color.red : Color.purple, lineWidth: 1)
-                                    .padding(.horizontal, 20)
-                            )
+                        .frame(height: 20)
+                        .padding()
+                        .background(Color.cgray)
+                        .foregroundStyle(.white)
+                        .cornerRadius(8)
+                        .padding(.horizontal, 20)
+                        .textContentType(.emailAddress)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(showValidationErrors && viewModel.email.isEmpty ? Color.red : Color.purple, lineWidth: 1)
+                                .padding(.horizontal, 20)
+                        )
                         
                         if showValidationErrors && viewModel.email.isEmpty {
                             Text("Email is required")
@@ -108,24 +117,24 @@ struct SignUpPage: View {
                         }
                     }
                     
-                    // Password Field with Error Message
+                    // MARK: - Password Field
                     VStack(alignment: .leading, spacing: 4) {
-                        SecureField(text: $viewModel.password){
-                            Text("Passwoed")
+                        SecureField(text: $viewModel.password) {
+                            Text("Password")
                                 .foregroundStyle(.gray.opacity(0.5))
                         }
-                            .frame(height: 20)
-                            .padding()
-                            .background(Color.cgray)
-                            .foregroundStyle(.white)
-                            .cornerRadius(8)
-                            .padding(.horizontal, 20)
-                            .textContentType(.emailAddress)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(showValidationErrors && viewModel.password.isEmpty ? Color.red : Color.purple, lineWidth: 1)
-                                    .padding(.horizontal, 20)
-                            )
+                        .frame(height: 20)
+                        .padding()
+                        .background(Color.cgray)
+                        .foregroundStyle(.white)
+                        .cornerRadius(8)
+                        .padding(.horizontal, 20)
+                        .textContentType(.emailAddress)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(showValidationErrors && viewModel.password.isEmpty ? Color.red : Color.purple, lineWidth: 1)
+                                .padding(.horizontal, 20)
+                        )
                         
                         if showValidationErrors && viewModel.password.isEmpty {
                             Text("Password is required")
@@ -135,24 +144,24 @@ struct SignUpPage: View {
                         }
                     }
                     
-                    // Confirm Password Field with Error Message
+                    // MARK: - Confirm Password Field
                     VStack(alignment: .leading, spacing: 4) {
-                        SecureField(text: $confirmPassword){
+                        SecureField(text: $confirmPassword) {
                             Text("Confirm Password")
                                 .foregroundStyle(.gray.opacity(0.5))
                         }
-                            .frame(height: 20)
-                            .padding()
-                            .background(Color.cgray)
-                            .foregroundStyle(.white)
-                            .cornerRadius(8)
-                            .padding(.horizontal, 20)
-                            .textContentType(.emailAddress)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(showValidationErrors && confirmPassword.isEmpty ? Color.red : Color.purple, lineWidth: 1)
-                                    .padding(.horizontal, 20)
-                            )
+                        .frame(height: 20)
+                        .padding()
+                        .background(Color.cgray)
+                        .foregroundStyle(.white)
+                        .cornerRadius(8)
+                        .padding(.horizontal, 20)
+                        .textContentType(.emailAddress)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(showValidationErrors && confirmPassword.isEmpty ? Color.red : Color.purple, lineWidth: 1)
+                                .padding(.horizontal, 20)
+                        )
                         
                         if showValidationErrors && confirmPassword.isEmpty {
                             Text("Confirm Password is required")
@@ -167,7 +176,7 @@ struct SignUpPage: View {
                         }
                     }
                     
-                    // General Error Message (if any)
+                    // MARK: - General Error Message
                     if let errorMessage = viewModel.errorMessage {
                         Text(errorMessage)
                             .foregroundColor(.red)
@@ -175,7 +184,7 @@ struct SignUpPage: View {
                             .padding(.horizontal, 20)
                     }
                     
-                    // Sign Up Button
+                    // MARK: - Sign Up Button
                     Button(action: {
                         if fullName.isEmpty || viewModel.email.isEmpty || viewModel.password.isEmpty || confirmPassword.isEmpty || viewModel.password != confirmPassword {
                             showValidationErrors = true
@@ -199,7 +208,7 @@ struct SignUpPage: View {
                         router.navigateToRoot()
                     }
                     
-                    // Login Link
+                    // MARK: - Login Link
                     HStack {
                         Text("Already have an account?")
                             .foregroundStyle(Color.white)
@@ -211,10 +220,12 @@ struct SignUpPage: View {
                     .padding(.bottom, 30)
                 }
             }
-        }.navigationBarBackButtonHidden(true)
+        }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
+// MARK: - Preview
 #Preview {
     SignUpPage()
         .environmentObject(Router())

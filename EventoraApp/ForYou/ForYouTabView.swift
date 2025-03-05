@@ -2,12 +2,12 @@
 //  ForYouTabView.swift
 //  EventoraApp
 //
-//  Created by jeboy on 19/02/25.
+//  Created by Abhinand K J on 19/02/25.
 //
-
 
 import SwiftUI
 
+// MARK: - For You Tab View
 struct ForYouTabView: View {
     @StateObject private var viewModel = ForYouViewModel()
     
@@ -19,7 +19,7 @@ struct ForYouTabView: View {
                 ScrollView {
                     LazyVStack {
                         GradientLine(title: "IN THE SPOTLIGHT")
-
+                        
                         if let spotlight = viewModel.eventResponse?.spotlight {
                             NavigationLink(destination: EventDetailsPage(event: spotlight.toEventoraEvent())) {
                                 VStack {
@@ -47,6 +47,7 @@ struct ForYouTabView: View {
     }
 }
 
+// MARK: - Best of India View
 struct BestOfIndia: View {
     @ObservedObject var viewModel: ForYouViewModel
     
@@ -83,7 +84,7 @@ struct BestOfIndia: View {
                                             .fill(Color.cgray)
                                             .frame(width: 60, height: 70)
                                             .cornerRadius(15)
-
+                                        
                                         VStack(spacing: 0) {
                                             Rectangle()
                                                 .fill(Color.white)
@@ -92,7 +93,7 @@ struct BestOfIndia: View {
                                             Spacer()
                                         }
                                         .frame(height: 70)
-
+                                        
                                         VStack(spacing: 2) {
                                             let dateParts = event.date.components(separatedBy: ", ")
                                             if dateParts.count == 2 {
@@ -100,12 +101,12 @@ struct BestOfIndia: View {
                                                     .font(.caption)
                                                     .fontWeight(.bold)
                                                     .foregroundColor(.black)
-
+                                                
                                                 Text(dateParts[1].components(separatedBy: " ")[0])
                                                     .font(.title2)
                                                     .fontWeight(.bold)
                                                     .foregroundColor(.white)
-
+                                                
                                                 Text(dateParts[1].components(separatedBy: " ")[1])
                                                     .font(.caption)
                                                     .foregroundColor(.white)
@@ -122,7 +123,7 @@ struct BestOfIndia: View {
                                             .foregroundColor(.white)
                                             .lineLimit(2)
                                             .multilineTextAlignment(.leading)
-
+                                        
                                         Text(event.location)
                                             .lineLimit(1)
                                             .foregroundStyle(.white)
@@ -142,6 +143,7 @@ struct BestOfIndia: View {
     }
 }
 
+// MARK: - Gradient Line
 struct GradientLine: View {
     var title: String
     var body: some View {
@@ -164,6 +166,7 @@ struct GradientLine: View {
     }
 }
 
+// MARK: - Spotlight View
 struct SpotLight: View {
     var titleMain: String
     var viewModel: ForYouViewModel
@@ -185,6 +188,7 @@ struct SpotLight: View {
     }
 }
 
+// MARK: - Date & Place Bar
 struct DatePlaceBar: View {
     var eventLocation: String
     var eventTime: String
@@ -233,6 +237,7 @@ struct DatePlaceBar: View {
     }
 }
 
+// MARK: - Spotlight to Event Conversion
 extension Spotlight {
     func toEventoraEvent() -> EvntoraEvent {
         return EvntoraEvent(
@@ -251,9 +256,7 @@ extension Spotlight {
     }
 }
 
-
-
+// MARK: - Preview
 #Preview {
     ForYouTabView()
 }
-

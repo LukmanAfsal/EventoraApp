@@ -2,13 +2,13 @@
 //  VideoPlayerView.swift
 //  EventoraApp
 //
-//  Created by jeboy on 13/02/25.
+//  Created by Abhinand K J on 13/02/25.
 //
-
 
 import SwiftUI
 import AVKit
 
+// MARK: - VideoPlayerView
 struct VideoPlayerView: UIViewRepresentable {
     var videoName: String
 
@@ -22,10 +22,13 @@ struct VideoPlayerView: UIViewRepresentable {
     }
 }
 
+// MARK: - PlayerUIView
 class PlayerUIView: UIView {
+    // MARK: - Properties
     private var playerLayer = AVPlayerLayer()
     private var player: AVPlayer?
 
+    // MARK: - Initializer
     init(videoName: String) {
         super.init(frame: .zero)
         setupPlayer(with: videoName)
@@ -35,7 +38,9 @@ class PlayerUIView: UIView {
         super.init(coder: coder)
     }
 
+    // MARK: - Setup Player
     private func setupPlayer(with videoName: String) {
+        // Load video from bundle
         guard let path = Bundle.main.path(forResource: videoName, ofType: "mp4") else {
             print("Error: Video file not found")
             return
@@ -44,7 +49,7 @@ class PlayerUIView: UIView {
         let url = URL(fileURLWithPath: path)
         player = AVPlayer(url: url)
         playerLayer.player = player
-        playerLayer.videoGravity = .resizeAspectFill  // Change to .resize if you want it fully inside
+        playerLayer.videoGravity = .resizeAspectFill  // Adjust video gravity as needed
         layer.addSublayer(playerLayer)
 
         // Loop the video
@@ -56,14 +61,12 @@ class PlayerUIView: UIView {
         player?.play()
     }
 
+    // MARK: - Layout Subviews
     override func layoutSubviews() {
         super.layoutSubviews()
         playerLayer.frame = bounds  // Update frame to match the SwiftUI-provided size
     }
 }
-
-
-
 
 //import SwiftUI
 //import AVKit

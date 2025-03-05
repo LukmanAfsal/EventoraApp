@@ -7,10 +7,15 @@
 
 import Foundation
 
+// MARK: - ProfilePageViewModel
 @MainActor
 final class ProfilePageViewModel: ObservableObject {
+    // MARK: - Published Properties
     @Published var isUserLoggedIn: Bool = false
     @Published var userLoggedOut: Bool = false
+    
+    // MARK: - Check User Logged In
+    /// Checks if the user is currently logged in by attempting to fetch the authenticated user.
     func checkUserLoggedIn() {
         do {
             _ = try AuthenticationManager.shared.getAuthenticatedUser()
@@ -20,6 +25,8 @@ final class ProfilePageViewModel: ObservableObject {
         }
     }
     
+    // MARK: - Sign Out
+    /// Signs out the user and updates the state accordingly.
     func signOut() throws {
         try AuthenticationManager.shared.signOut()
         isUserLoggedIn = false
