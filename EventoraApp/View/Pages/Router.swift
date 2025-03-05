@@ -8,12 +8,13 @@
 import Foundation
 import SwiftUI
 
+// MARK: - Router
 final class Router: ObservableObject {
     
+    // MARK: - Properties
+    @Published var navPath: [NavDestination] = []
     
-    
-    @Published var navPath : [NavDestination] = []
-    
+    // MARK: - Navigation Methods
     func navigate(to destination: NavDestination) {
         navPath.append(destination)
     }
@@ -27,10 +28,10 @@ final class Router: ObservableObject {
     }
 }
 
+// MARK: - NavDestination
 public enum NavDestination: Codable, Hashable {
     case login
     case signUp
     case home
     case profile
-
 }

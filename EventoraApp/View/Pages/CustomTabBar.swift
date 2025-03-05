@@ -7,11 +7,14 @@
 
 import SwiftUI
 
+// MARK: - CustomTabBar View
 struct CustomTabBar: View {
+    // MARK: - Binding
     @Binding var selectedTab: AuraTab
     
     var body: some View {
         HStack {
+            // MARK: - Tab Items
             ForEach(AuraTab.allCases, id: \.self) { tab in
                 Button {
                     selectedTab = tab
@@ -25,6 +28,7 @@ struct CustomTabBar: View {
         .background(Color.black.opacity(0.5).ignoresSafeArea(edges: .bottom))
     }
     
+    // MARK: - Tab Item View
     private func tabItemView(for tab: AuraTab, isSelected: Bool) -> some View {
         let item = tab.tabItem
         return VStack(spacing: 4) {

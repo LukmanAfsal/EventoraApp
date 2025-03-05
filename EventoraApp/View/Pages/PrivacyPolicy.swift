@@ -2,24 +2,30 @@
 //  PrivacyPolicy.swift
 //  EventoraApp
 //
-//  Created by jeboy on 13/02/25.
+//  Created by Abhinand K J on 13/02/25.
 //
 
 import SwiftUI
 
+// MARK: - PrivacyPolicy View
 struct PrivacyPolicy: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
+                // MARK: - Title
                 Text("Privacy Policy for Eventora")
                     .font(.largeTitle)
                     .bold()
                     .padding(.bottom, 8)
                 
+                // MARK: - Introduction
                 Group {
                     Text("Thank you for choosing **Eventora**, your go-to app for booking and managing events. We are committed to protecting your privacy and ensuring that your personal information is handled in a safe and responsible manner. This Privacy Policy outlines how we collect, use, store, and protect your information when you use our app. By using **Eventora**, you agree to the terms outlined in this policy.")
                         .padding(.bottom, 8)
-                    
+                }
+                
+                // MARK: - Information We Collect
+                Group {
                     Text("1. Information We Collect")
                         .font(.title2)
                         .bold()
@@ -31,6 +37,7 @@ struct PrivacyPolicy: View {
                     Text("- **Location Data**: If you enable location services, we may collect your precise or approximate location to provide event recommendations or facilitate bookings.")
                 }
                 
+                // MARK: - How We Use Your Information
                 Group {
                     Text("2. How We Use Your Information")
                         .font(.title2)
@@ -44,6 +51,7 @@ struct PrivacyPolicy: View {
                     Text("- To comply with legal obligations and enforce our terms of service.")
                 }
                 
+                // MARK: - Sharing Your Information
                 Group {
                     Text("3. Sharing Your Information")
                         .font(.title2)
@@ -55,6 +63,7 @@ struct PrivacyPolicy: View {
                     Text("- **Business Transfers**: In the event of a merger, acquisition, or sale of assets, your information may be transferred to the new owner.")
                 }
                 
+                // MARK: - Data Security
                 Group {
                     Text("4. Data Security")
                         .font(.title2)
@@ -62,6 +71,7 @@ struct PrivacyPolicy: View {
                     Text("We take the security of your information seriously and implement industry-standard measures to protect it from unauthorized access, alteration, or destruction. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security.")
                 }
                 
+                // MARK: - Your Rights and Choices
                 Group {
                     Text("5. Your Rights and Choices")
                         .font(.title2)
@@ -73,6 +83,7 @@ struct PrivacyPolicy: View {
                     Text("- **Location Services**: You can enable or disable location services through your device settings.")
                 }
                 
+                // MARK: - Children’s Privacy
                 Group {
                     Text("6. Children’s Privacy")
                         .font(.title2)
@@ -80,6 +91,7 @@ struct PrivacyPolicy: View {
                     Text("**Eventora** is not intended for use by individuals under the age of 13. We do not knowingly collect personal information from children. If we become aware that we have collected such information, we will take steps to delete it promptly.")
                 }
                 
+                // MARK: - Changes to This Privacy Policy
                 Group {
                     Text("7. Changes to This Privacy Policy")
                         .font(.title2)
@@ -87,6 +99,7 @@ struct PrivacyPolicy: View {
                     Text("We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. We will notify you of any significant changes by posting the updated policy on our app or website. Your continued use of **Eventora** after such changes constitutes your acceptance of the updated policy.")
                 }
                 
+                // MARK: - Contact Us
                 Group {
                     Text("8. Contact Us")
                         .font(.title2)
@@ -96,6 +109,7 @@ struct PrivacyPolicy: View {
                     Text("**Address**: [Insert Company Address, if applicable]")
                 }
                 
+                // MARK: - Closing Statement
                 Text("Thank you for trusting **Eventora** with your event booking needs. We are dedicated to providing you with a seamless and secure experience.")
                     .padding(.top, 8)
             }
@@ -105,6 +119,7 @@ struct PrivacyPolicy: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     PrivacyPolicy()
 }

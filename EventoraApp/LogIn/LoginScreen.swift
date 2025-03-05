@@ -13,10 +13,12 @@ struct LoginScreen: View {
     var body: some View {
         NavigationStack(path: $router.navPath) {
             ZStack {
+                // MARK:- Background Video
                 VideoPlayerView(videoName: "PartyMood1")
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack(spacing: 20) {
+                    // MARK:- Skip Button
                     HStack {
                         Spacer()
                         VStack {
@@ -28,6 +30,8 @@ struct LoginScreen: View {
                         }
                         .padding()
                     }
+                    
+                    // MARK:- Logo and Tagline
                     VStack {
                         Image("img-Eventora3")
                             .resizable()
@@ -41,16 +45,18 @@ struct LoginScreen: View {
                     Spacer()
                     
                     VStack(spacing: 20) {
+                        // MARK:- Login Title
                         Text("Log in or sign up")
                             .bold()
                             .font(.title2)
                             .foregroundColor(.white)
                         
-                        // Email TextField with Error Message
+                        // MARK:- Email TextField with Error Message
                         VStack(alignment: .leading, spacing: 4) {
                             TextField(text: $viewModel.email){
                                 Text("Enter your email")
-                                .foregroundStyle(.gray.opacity(0.5))}
+                                    .foregroundStyle(.gray.opacity(0.5))
+                            }
                             .frame(height: 20)
                             .padding()
                             .background(Color.cgray)
@@ -72,17 +78,19 @@ struct LoginScreen: View {
                             }
                         }
                         
-                        // Password SecureField with Error Message
+                        // MARK:- Password SecureField with Error Message
                         VStack(alignment: .leading, spacing: 4) {
                             ZStack(alignment: .trailing) {
                                 if showPassword {
                                     TextField(text: $viewModel.password){
                                         Text("Password")
-                                        .foregroundStyle(.gray.opacity(0.5))}
+                                            .foregroundStyle(.gray.opacity(0.5))
+                                    }
                                 } else {
                                     SecureField(text: $viewModel.password){
                                         Text("Password")
-                                        .foregroundStyle(.gray.opacity(0.5))}
+                                            .foregroundStyle(.gray.opacity(0.5))
+                                    }
                                 }
                                 Button(action: {
                                     showPassword.toggle()
@@ -111,7 +119,7 @@ struct LoginScreen: View {
                             }
                         }
                         
-                        // General Error Message (if any)
+                        // MARK:- General Error Message (if any)
                         if let errorMessage = viewModel.errorMessage {
                             Text(errorMessage)
                                 .foregroundColor(.red)
@@ -119,7 +127,7 @@ struct LoginScreen: View {
                                 .padding(.horizontal, 20)
                         }
                         
-                        // Login Button
+                        // MARK:- Login Button
                         Button(action: {
                             if viewModel.email.isEmpty || viewModel.password.isEmpty {
                                 showValidationErrors = true
@@ -141,8 +149,9 @@ struct LoginScreen: View {
                         .onChange(of: viewModel.isLogInSuccess) { _, _ in
                             loginSuccessful = true
                             router.navigateToRoot()
-                           
                         }
+                        
+                        // MARK:- Sign Up Link
                         HStack {
                             Text("Don't Have an Account?")
                                 .foregroundStyle(Color.white)
@@ -158,6 +167,7 @@ struct LoginScreen: View {
                     
                     Spacer()
                     
+                    // MARK:- Terms and Privacy Policy
                     VStack(spacing: 10) {
                         Text("By continuing, you agree to our")
                             .foregroundStyle(.white)
@@ -187,7 +197,7 @@ struct LoginScreen: View {
     }
 }
 
-
+// MARK: - Preview
 #Preview {
     LoginScreen(skippedOnboarding: .constant(false), loginSuccessful: .constant(false))
         .environmentObject(Router())

@@ -5,14 +5,15 @@
 //  Created by Abhinand K J on 04/03/25.
 //
 
-
 import Foundation
 
+// MARK: - Event Response Model
 struct EventResponse: Codable {
     let spotlight: Spotlight
     let bestOfIndia: [EvntoraEvent]
 }
 
+// MARK: - Spotlight Model
 struct Spotlight: Codable {
     let title: String
     let location: String
@@ -26,6 +27,7 @@ struct Spotlight: Codable {
     let artist: Artist
 }
 
+// MARK: - Event Model
 struct EvntoraEvent: Codable, Identifiable {
     let id: String
     let image: String
@@ -40,8 +42,8 @@ struct EvntoraEvent: Codable, Identifiable {
     let artist: Artist
 }
 
+// MARK: - Artist Model
 struct Artist: Codable {
     let name: String
     let image: String
 }
-

@@ -5,15 +5,16 @@
 //  Created by Abhinand K J on 20/02/25.
 //
 
-
 import SwiftUI
 
+// MARK: - AuraTab Enum
 enum AuraTab: Int, CaseIterable {
     case forYou = 1
     case events = 2
     case movies = 3
     case sport = 4
     
+    // MARK: - Tab Item Data
     var tabItem: TabItemData {
         switch self {
         case .forYou:
@@ -26,7 +27,9 @@ enum AuraTab: Int, CaseIterable {
             return TabItemData(image: "figure.disc.sports", title: "Sport", color: .green)
         }
     }
-    var gradientColor: Color{
+    
+    // MARK: - Gradient Color
+    var gradientColor: Color {
         switch self {
         case .forYou:
             return .cpurple
@@ -39,7 +42,8 @@ enum AuraTab: Int, CaseIterable {
         }
     }
     
-    var searchPlaceHolder: String{
+    // MARK: - Search Placeholder
+    var searchPlaceHolder: String {
         switch self {
         case .forYou:
             return "Search your Favourites"
@@ -53,14 +57,9 @@ enum AuraTab: Int, CaseIterable {
     }
 }
 
+// MARK: - TabItemData Struct
 struct TabItemData {
     let image: String
     let title: String
     let color: Color
 }
-
-
-
-
-
-

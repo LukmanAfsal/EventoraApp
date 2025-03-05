@@ -14,45 +14,45 @@ final class LogInViewModel: ObservableObject {
     @Published var password = ""
     @Published var isLogInSuccess: Bool = false
     @Published var errorMessage: String? = nil
-
-    // Validate email format
+    
+    // MARK:- Email Validation
     func isValidEmail(_ email: String) -> Bool {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
         return emailPredicate.evaluate(with: email)
     }
-
-    // Validate password length
+    
+    // MARK:- Password Validation
     func isValidPassword(_ password: String) -> Bool {
         return password.count >= 6
     }
-
-    // Login function
+    
+    // MARK:- Login Function
     func login() async {
-        // Validate fields
+        // MARK:- Field Validation
         guard !email.isEmpty, !password.isEmpty else {
             errorMessage = "Please fill in all fields."
             return
         }
-
+        
         guard isValidEmail(email) else {
             errorMessage = "Please enter a valid email address."
             return
         }
-
+        
         guard isValidPassword(password) else {
             errorMessage = "Password must be at least 6 characters long."
             return
         }
-
-        // Attempt to log in
+        
+        // MARK:- Firebase Login Attempt
         do {
             let returnedUserData = try await AuthenticationManager.shared.signIn(email: email, password: password)
             print("Login Success")
             isLogInSuccess.toggle()
             print(returnedUserData)
         } catch {
-            // Handle specific Firebase errors
+            // MARK:- Error Handling
             if let error = error as NSError? {
                 switch error.code {
                 case AuthErrorCode.invalidCredential.rawValue:
