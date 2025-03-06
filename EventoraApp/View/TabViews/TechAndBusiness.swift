@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MoviesTab: View {
+struct TechAndBusiness: View {
     var body: some View {
         ZStack {
             Color.black
@@ -22,5 +22,5 @@ struct MoviesTab: View {
 }
 
 #Preview {
-    MoviesTab()
+    TechAndBusiness()
 }
