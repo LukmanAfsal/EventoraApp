@@ -99,7 +99,7 @@ struct HomePageScreen: View {
                         switch selectedTab {
                         case .forYou: ForYouTabView()
                         case .events: EventsTab()
-                        case .movies: MoviesTab()
+                        case .techAndBusiness: MoviesTab()
                         case .sport: DiningTab()
                         }
                         
