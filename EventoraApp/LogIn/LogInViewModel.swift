@@ -14,6 +14,7 @@ final class LogInViewModel: ObservableObject {
     @Published var password = ""
     @Published var isLogInSuccess: Bool = false
     @Published var errorMessage: String? = nil
+
     
     // MARK:- Email Validation
     func isValidEmail(_ email: String) -> Bool {
@@ -67,3 +68,5 @@ final class LogInViewModel: ObservableObject {
         }
     }
 }
+
+
