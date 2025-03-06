@@ -69,6 +69,9 @@ struct LoginScreen: View {
                                     .stroke(showValidationErrors && viewModel.email.isEmpty ? Color.red : Color.purple, lineWidth: 1)
                                     .padding(.horizontal, 20)
                             )
+                            .autocapitalization(.none)
+                            .keyboardType(.emailAddress)
+                            .textContentType(.emailAddress)
                             
                             if showValidationErrors && viewModel.email.isEmpty {
                                 Text("Email is required")
@@ -126,7 +129,6 @@ struct LoginScreen: View {
                                 .font(.caption)
                                 .padding(.horizontal, 20)
                         }
-                        
                         // MARK:- Login Button
                         Button(action: {
                             if viewModel.email.isEmpty || viewModel.password.isEmpty {
@@ -160,7 +162,17 @@ struct LoginScreen: View {
                             }) {
                                 Text("Sign Up")
                                     .foregroundStyle(Color.purple)
+                                    .fontWeight(.semibold)
                                     .underline()
+                            }
+                        }
+                        HStack {
+                            // Forgot Password Button
+                            NavigationLink(destination: ForgotPassPage()) {
+                                Text("Forgot Password?")
+                                    .foregroundStyle(Color.purple)
+                                    .underline()
+                                    .fontWeight(.semibold)
                             }
                         }
                     }

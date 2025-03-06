@@ -78,6 +78,14 @@ final class AuthenticationManager {
         try await user.delete()
     }
     
+    // MARK: - Reset Password
+    /// Sends a password reset email to the provided email address.
+    /// - Parameter email: The email address of the user.
+    /// - Throws: An error if the password reset request fails.
+    func resetPassword(email: String) async throws {
+        try await Auth.auth().sendPasswordReset(withEmail: email)
+    }
+    
     // MARK: - Sign Out
     /// Signs out the currently authenticated user.
     /// - Throws: An error if the sign-out fails.
