@@ -13,33 +13,34 @@ class ForYouViewModel: ObservableObject {
     @Published var eventResponse: EventResponse?
     
     // MARK: - Load Events (Local JSON)
-    /*
-    init() {
-        loadEvents()
-    }
     
-    func loadEvents() {
-        if let url = Bundle.main.url(forResource: "ForYouJson", withExtension: "json") {
-            do {
-                let data = try Data(contentsOf: url)
-                let decodedData = try JSONDecoder().decode(EventResponse.self, from: data)
-                DispatchQueue.main.async {
-                    self.eventResponse = decodedData
-                }
-                print("Successfully loaded JSON data")
-            } catch {
-                print("Error decoding JSON: \(error.localizedDescription)")
-            }
-        } else {
-            print("Failed to find ForYouJson.json in bundle")
-        }
-    }
-    */
+//    init() {
+//        loadEvents()
+//    }
+//    
+//    func loadEvents() {
+//        if let url = Bundle.main.url(forResource: "ForYouJson", withExtension: "json") {
+//            do {
+//                let data = try Data(contentsOf: url)
+//                let decodedData = try JSONDecoder().decode(EventResponse.self, from: data)
+//                DispatchQueue.main.async {
+//                    self.eventResponse = decodedData
+//                }
+//                print("Successfully loaded JSON data")
+//            } catch {
+//                print("Error decoding JSON: \(error.localizedDescription)")
+//            }
+//        } else {
+//            print("Failed to find ForYouJson.json in bundle")
+//        }
+//    }
+//}
+    
     
     // MARK: - Load Events (API)
     /// Fetches event data from the API and updates the `eventResponse` property.
     func loadEvents() {
-        guard let url = URL(string: "https://run.mocky.io/v3/62618c4c-3829-4f28-995b-d663b5d37ae3") else {
+        guard let url = URL(string: "https://run.mocky.io/v3/232c5404-aca1-4166-9b01-a576904ebb4c") else {
             print("Invalid URL")
             return
         }

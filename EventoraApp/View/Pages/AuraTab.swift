@@ -22,7 +22,7 @@ enum AuraTab: Int, CaseIterable {
         case .events:
             return TabItemData(image: "guitars", title: "Events", color: .orange)
         case .techAndBusiness:
-            return TabItemData(image: "movieclapper", title: "Tech & Business", color: .purple)
+            return TabItemData(image: "movieclapper", title: "Techno & Business", color: .purple)
         case .sport:
             return TabItemData(image: "figure.disc.sports", title: "Sport", color: .green)
         }
