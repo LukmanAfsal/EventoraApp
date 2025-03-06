@@ -24,6 +24,17 @@ final class ProfilePageViewModel: ObservableObject {
             isUserLoggedIn = false
         }
     }
+    // MARK: - Delete Account
+    /// Deletes the user's account and updates the state accordingly.
+    func deleteAccount() async {
+        do {
+            try await AuthenticationManager.shared.deleteUser()
+            isUserLoggedIn = false
+            userLoggedOut.toggle()
+        } catch {
+            print("Error deleting account: \(error)")
+        }
+    }
     
     // MARK: - Sign Out
     /// Signs out the user and updates the state accordingly.
