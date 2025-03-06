@@ -108,6 +108,9 @@ struct SignUpPage: View {
                                 .stroke(showValidationErrors && viewModel.email.isEmpty ? Color.red : Color.purple, lineWidth: 1)
                                 .padding(.horizontal, 20)
                         )
+                        .autocapitalization(.none)
+                        .keyboardType(.emailAddress)
+                        .textContentType(.emailAddress)
                         
                         if showValidationErrors && viewModel.email.isEmpty {
                             Text("Email is required")
