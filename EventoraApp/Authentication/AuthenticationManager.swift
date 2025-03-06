@@ -67,6 +67,17 @@ final class AuthenticationManager {
         return AuthDataResultModel(user: authDataResult.user)
     }
     
+    // MARK: - Delete User
+    /// Deletes the currently authenticated user.
+    /// - Throws: An error if the deletion fails.
+    func deleteUser() async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw URLError(.badServerResponse)
+        }
+        
+        try await user.delete()
+    }
+    
     // MARK: - Sign Out
     /// Signs out the currently authenticated user.
     /// - Throws: An error if the sign-out fails.
