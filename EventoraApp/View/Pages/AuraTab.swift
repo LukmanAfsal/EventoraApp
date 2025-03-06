@@ -11,7 +11,7 @@ import SwiftUI
 enum AuraTab: Int, CaseIterable {
     case forYou = 1
     case events = 2
-    case movies = 3
+    case techAndBusiness = 3
     case sport = 4
     
     // MARK: - Tab Item Data
@@ -21,8 +21,8 @@ enum AuraTab: Int, CaseIterable {
             return TabItemData(image: "wand.and.sparkles", title: "For You", color: .cpurple)
         case .events:
             return TabItemData(image: "guitars", title: "Events", color: .orange)
-        case .movies:
-            return TabItemData(image: "movieclapper", title: "Movies", color: .purple)
+        case .techAndBusiness:
+            return TabItemData(image: "movieclapper", title: "Tech & Business", color: .purple)
         case .sport:
             return TabItemData(image: "figure.disc.sports", title: "Sport", color: .green)
         }
@@ -35,7 +35,7 @@ enum AuraTab: Int, CaseIterable {
             return .cpurple
         case .events:
             return .orange
-        case .movies:
+        case .techAndBusiness:
             return .purple
         case .sport:
             return .green
@@ -49,7 +49,7 @@ enum AuraTab: Int, CaseIterable {
             return "Search your Favourites"
         case .events:
             return "Search your Events"
-        case .movies:
+        case .techAndBusiness:
             return "Search your Movies"
         case .sport:
             return "Search your Restaurants"

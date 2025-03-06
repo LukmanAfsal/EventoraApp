@@ -60,6 +60,8 @@ struct SplashScreen: View {
 // MARK: - Preview
 #Preview {
     SplashScreen()
+    
+    
 }
 
 // MARK: - ContentView (Alternative Implementation)
