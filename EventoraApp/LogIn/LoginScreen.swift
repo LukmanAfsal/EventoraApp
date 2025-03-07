@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftUICore
 
 struct LoginScreen: View {
     @StateObject private var viewModel = LogInViewModel()
@@ -13,25 +14,24 @@ struct LoginScreen: View {
     var body: some View {
         NavigationStack(path: $router.navPath) {
             ZStack {
-                // MARK:- Background Video
+                // MARK: - Background Video
                 VideoPlayerView(videoName: "PartyMood1")
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack(spacing: 20) {
-                    // MARK:- Skip Button
+                    // MARK: - Skip Button
                     HStack {
                         Spacer()
                         VStack {
                             SkipButton()
                                 .onTapGesture {
                                     skippedOnboarding = true
-                                    //router.navigateToRoot()
                                 }
                         }
                         .padding()
                     }
                     
-                    // MARK:- Logo and Tagline
+                    // MARK: - Logo and Tagline
                     VStack {
                         Image("img-Eventora3")
                             .resizable()
@@ -45,15 +45,15 @@ struct LoginScreen: View {
                     Spacer()
                     
                     VStack(spacing: 20) {
-                        // MARK:- Login Title
+                        // MARK: - Login Title
                         Text("Log in or sign up")
                             .bold()
                             .font(.title2)
                             .foregroundColor(.white)
                         
-                        // MARK:- Email TextField with Error Message
+                        // MARK: - Email TextField with Error Message
                         VStack(alignment: .leading, spacing: 4) {
-                            TextField(text: $viewModel.email){
+                            TextField(text: $viewModel.email) {
                                 Text("Enter your email")
                                     .foregroundStyle(.gray.opacity(0.5))
                             }
@@ -81,16 +81,16 @@ struct LoginScreen: View {
                             }
                         }
                         
-                        // MARK:- Password SecureField with Error Message
+                        // MARK: - Password SecureField with Error Message
                         VStack(alignment: .leading, spacing: 4) {
                             ZStack(alignment: .trailing) {
                                 if showPassword {
-                                    TextField(text: $viewModel.password){
+                                    TextField(text: $viewModel.password) {
                                         Text("Password")
                                             .foregroundStyle(.gray.opacity(0.5))
                                     }
                                 } else {
-                                    SecureField(text: $viewModel.password){
+                                    SecureField(text: $viewModel.password) {
                                         Text("Password")
                                             .foregroundStyle(.gray.opacity(0.5))
                                     }
@@ -122,14 +122,15 @@ struct LoginScreen: View {
                             }
                         }
                         
-                        // MARK:- General Error Message (if any)
+                        // MARK: - General Error Message (if any)
                         if let errorMessage = viewModel.errorMessage {
                             Text(errorMessage)
                                 .foregroundColor(.red)
                                 .font(.caption)
                                 .padding(.horizontal, 20)
                         }
-                        // MARK:- Login Button
+                        
+                        // MARK: - Login Button
                         Button(action: {
                             if viewModel.email.isEmpty || viewModel.password.isEmpty {
                                 showValidationErrors = true
@@ -153,7 +154,27 @@ struct LoginScreen: View {
                             router.navigateToRoot()
                         }
                         
-                        // MARK:- Sign Up Link
+                        // MARK: - Google Sign-In Button
+                        Button(action: {
+                            Task {
+                                await viewModel.signInWithGoogle()
+                            }
+                        }) {
+                            HStack {
+                                Image("google_logo") // Add a Google logo asset
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                                Text("Sign in with Google")
+                                    .foregroundColor(.white)
+                            }
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.blue)
+                            .cornerRadius(8)
+                            .padding(.horizontal, 20)
+                        }
+                        
+                        // MARK: - Sign Up Link
                         HStack {
                             Text("Don't Have an Account?")
                                 .foregroundStyle(Color.white)
@@ -166,8 +187,9 @@ struct LoginScreen: View {
                                     .underline()
                             }
                         }
+                        
+                        // MARK: - Forgot Password Button
                         HStack {
-                            // Forgot Password Button
                             NavigationLink(destination: ForgotPassPage()) {
                                 Text("Forgot Password?")
                                     .foregroundStyle(Color.purple)
@@ -179,7 +201,7 @@ struct LoginScreen: View {
                     
                     Spacer()
                     
-                    // MARK:- Terms and Privacy Policy
+                    // MARK: - Terms and Privacy Policy
                     VStack(spacing: 10) {
                         Text("By continuing, you agree to our")
                             .foregroundStyle(.white)
