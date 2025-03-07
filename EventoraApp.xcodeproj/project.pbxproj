@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B0E50BD2D79C6F500D028B1 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 2B0E50BC2D79C6F500D028B1 /* GoogleSignIn */; };
+		2B0E50BF2D79C6F500D028B1 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2B0E50BE2D79C6F500D028B1 /* GoogleSignInSwift */; };
 		2B9783702D6704ED00D883C1 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2B97836F2D6704ED00D883C1 /* FirebaseAnalytics */; };
 		2B9783732D67102B00D883C1 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 2B9783722D67102B00D883C1 /* FirebaseAuth */; };
 /* End PBXBuildFile section */
@@ -15,9 +17,22 @@
 		0BE721DC2D5B1FBB00ECE073 /* EventoraApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EventoraApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		2B0E511E2D7AAEEA00D028B1 /* Exceptions for "EventoraApp" folder in "EventoraApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 0BE721DB2D5B1FBB00ECE073 /* EventoraApp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0BE721DE2D5B1FBB00ECE073 /* EventoraApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				2B0E511E2D7AAEEA00D028B1 /* Exceptions for "EventoraApp" folder in "EventoraApp" target */,
+			);
 			path = EventoraApp;
 			sourceTree = "<group>";
 		};
@@ -30,6 +45,8 @@
 			files = (
 				2B9783702D6704ED00D883C1 /* FirebaseAnalytics in Frameworks */,
 				2B9783732D67102B00D883C1 /* FirebaseAuth in Frameworks */,
+				2B0E50BD2D79C6F500D028B1 /* GoogleSignIn in Frameworks */,
+				2B0E50BF2D79C6F500D028B1 /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +99,8 @@
 			packageProductDependencies = (
 				2B97836F2D6704ED00D883C1 /* FirebaseAnalytics */,
 				2B9783722D67102B00D883C1 /* FirebaseAuth */,
+				2B0E50BC2D79C6F500D028B1 /* GoogleSignIn */,
+				2B0E50BE2D79C6F500D028B1 /* GoogleSignInSwift */,
 			);
 			productName = EventoraApp;
 			productReference = 0BE721DC2D5B1FBB00ECE073 /* EventoraApp.app */;
@@ -113,6 +132,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				2B97836E2D6704ED00D883C1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				2B0E50BB2D79C6F500D028B1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0BE721DD2D5B1FBB00ECE073 /* Products */;
@@ -274,6 +294,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"EventoraApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = EventoraApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,6 +305,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = mvocsad.EventoraApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -302,6 +324,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"EventoraApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = EventoraApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -312,6 +335,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = mvocsad.EventoraApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -344,6 +368,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2B0E50BB2D79C6F500D028B1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 		2B97836E2D6704ED00D883C1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -355,6 +387,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2B0E50BC2D79C6F500D028B1 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2B0E50BB2D79C6F500D028B1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		2B0E50BE2D79C6F500D028B1 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2B0E50BB2D79C6F500D028B1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
 		2B97836F2D6704ED00D883C1 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2B97836E2D6704ED00D883C1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
