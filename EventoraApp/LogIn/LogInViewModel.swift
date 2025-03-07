@@ -67,6 +67,18 @@ final class LogInViewModel: ObservableObject {
             print("Login Error: \(error)")
         }
     }
+    // Add Google Sign-In function
+    func signInWithGoogle() async {
+        do {
+            let returnedUserData = try await AuthenticationManager.shared.signInWithGoogle()
+            print("Google Sign-In Success")
+            isLogInSuccess.toggle()
+            print(returnedUserData)
+        } catch {
+            errorMessage = "Google Sign-In failed. Please try again."
+            print("Google Sign-In Error: \(error)")
+        }
+    }
 }
 
 
