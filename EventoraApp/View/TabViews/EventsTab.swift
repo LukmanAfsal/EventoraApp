@@ -23,6 +23,52 @@ struct EventsTab: View {
         Event(title: "Sample Event 5", date: "10 Apr, 7PM", location: "Chennai", image: "e4")
     ]
     
+    let artists = [
+            (name: "Prateek Kuhad", image: "e2"),
+            (name: "Geetha Madhuri", image: "e3"),
+            (name: "M.M. Keeravani", image: "e4"),
+            (name: "Rishi Rikhiram", image: "e2")
+        ]
+    
+    let concerts = [
+        ConcertEvent(
+            artistName: "Prateek Kuhad",
+            eventTitle: "Prateek Kuhad live at Quake Arena",
+            venue: "Quake Arena",
+            city: "Hyderabad",
+            price: "₹999 onwards",
+            posterImageName: "e2",
+            date: createDate(day: 22, month: 3, year: 2025)
+        ),
+        ConcertEvent(
+            artistName: "Geetha Madhuri",
+            eventTitle: "Geetha Madhuri Concert",
+            venue: "Phoenix Arena",
+            city: "Bengaluru",
+            price: "₹1299 onwards",
+            posterImageName: "e3",
+            date: createDate(day: 15, month: 4, year: 2025)
+        ),
+        ConcertEvent(
+            artistName: "M.M. Keeravani",
+            eventTitle: "Musical Night with M.M. Keeravani",
+            venue: "Shilpakala Vedika",
+            city: "Hyderabad",
+            price: "₹1499 onwards",
+            posterImageName: "e4",
+            date: createDate(day: 5, month: 5, year: 2025)
+        ),
+        ConcertEvent(
+            artistName: "Rishi Rikhiram",
+            eventTitle: "Rishi Rikhiram Live",
+            venue: "Hard Rock Cafe",
+            city: "Mumbai",
+            price: "₹899 onwards",
+            posterImageName: "e3",
+            date: createDate(day: 28, month: 3, year: 2025)
+        )
+    ]
+    
     var body: some View {
         ZStack {
             Color.black
@@ -87,10 +133,203 @@ struct EventsTab: View {
                         }
                     }
                     
+                    
+                    GradientLine(title: "ARTISTS")
+                    
+                            ZStack {
+                                Color.black.edgesIgnoringSafeArea(.all)
+                                
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 0) {
+                                        ForEach(artists, id: \.name) { artist in
+                                            ArtistView(name: artist.name, imageName: artist.image)
+                                        }
+                                    }
+                                    .padding(.horizontal, 10)
+                                }
+                            }
+                    
+                    
+                    
+                    GradientLine(title: "ALL EVENTS")
+                    
+                    
+                    ScrollView {
+                        LazyVStack(spacing: 24) {
+                            ForEach(concerts, id: \.id) { concert in
+                                ConcertCardView(concert: concert)
+                                    .padding(.horizontal)
+                            }
+                        }
+                        .padding(.vertical, 20)
+                        .background(Color.black.edgesIgnoringSafeArea(.all))
+                    }
+                    .background(Color.black.edgesIgnoringSafeArea(.all))
+                    
+                    
+                    
                 }
                 .padding()
             }
         }
+    }
+}
+
+// Model for concert data
+struct ConcertEvent {
+    let id = UUID()
+    let artistName: String
+    let eventTitle: String
+    let venue: String
+    let city: String
+    let price: String
+    let posterImageName: String
+    let date: Date
+}
+
+// Formatter for displaying dates
+extension ConcertEvent {
+    var dayString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEE"
+        return formatter.string(from: date)
+    }
+    
+    var dateString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd"
+        return formatter.string(from: date)
+    }
+    
+    var monthString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM"
+        return formatter.string(from: date)
+    }
+}
+
+struct ConcertCardView: View {
+    let concert: ConcertEvent
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            // Poster image (complete as-is)
+            Image(concert.posterImageName)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .cornerRadius(24, corners: [.topLeft, .topRight])
+            
+            // Event details section
+            HStack(alignment: .top, spacing: 16) {
+                // Date box
+                VStack(spacing: 0) {
+                    Text(concert.dayString)
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(.gray)
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, 10)
+                    
+                    Text(concert.dateString)
+                        .font(.system(size: 32, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding(.vertical, 4)
+                    
+                    Text(concert.monthString)
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(.gray)
+                        .frame(maxWidth: .infinity)
+                        .padding(.bottom, 10)
+                }
+                .frame(width: 70)
+                .background(Color(white: 0.15))
+                .cornerRadius(12)
+                
+                // Event details
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(concert.eventTitle)
+                        .font(.system(size: 20, weight: .semibold))
+                        .foregroundColor(.white)
+                        .lineLimit(1)
+                    
+                    Text("\(concert.venue), \(concert.city)")
+                        .font(.system(size: 16))
+                        .foregroundColor(.gray)
+                        .lineLimit(1)
+                    
+                    Text(concert.price)
+                        .font(.system(size: 16))
+                        .foregroundColor(.gray)
+                        .padding(.top, 2)
+                }
+                .padding(.vertical, 10)
+                
+                Spacer()
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 10)
+            .background(Color.black)
+            .cornerRadius(24, corners: [.bottomLeft, .bottomRight])
+        }
+        .background(Color.black)
+        .cornerRadius(24)
+        .shadow(color: Color.black.opacity(0.3), radius: 10, x: 0, y: 5)
+    }
+}
+
+// Extension for custom corner radius
+extension View {
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape(RoundedCorner(radius: radius, corners: corners))
+    }
+}
+
+struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+    
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(
+            roundedRect: rect,
+            byRoundingCorners: corners,
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
+        return Path(path.cgPath)
+    }
+}
+
+// Helper function to create dates
+func createDate(day: Int, month: Int, year: Int) -> Date {
+    var components = DateComponents()
+    components.day = day
+    components.month = month
+    components.year = year
+    return Calendar.current.date(from: components) ?? Date()
+}
+
+struct ArtistView: View {
+    let name: String
+    let imageName: String
+    
+    var body: some View {
+        VStack(alignment: .center) {
+            Image(imageName)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 120, height: 120)
+                .clipShape(Circle())
+                
+            Text(name)
+                .foregroundColor(.white)
+                .font(.system(size: 18, weight: .medium))
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
+                .frame(height: 50)
+                .padding(.top, 8)
+        }
+        .frame(width: 120)
+        .background(.yellow)
+        .padding(.horizontal, 10)
+        .background(.green)
     }
 }
 
@@ -117,7 +356,7 @@ struct CategoryButton: View {
                                     endPoint: .trailing
                                 )
                               )
-                            : AnyShapeStyle(Color.black.opacity(0.3))
+                            : AnyShapeStyle(Color.purple.opacity(0.3))
                         )
                         .overlay(
                             RoundedRectangle(cornerRadius: 20)
@@ -168,7 +407,7 @@ struct EventCard: View {
                     RoundedRectangle(cornerRadius: 20)
                         .fill(
                             LinearGradient(
-                                gradient: Gradient(colors: [.clear, .black.opacity(0.7)]),
+                                gradient: Gradient(colors: [.clear, .cgray.opacity(0.7)]),
                                 startPoint: .top,
                                 endPoint: .bottom
                             )
