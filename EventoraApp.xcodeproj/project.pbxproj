@@ -22,16 +22,28 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				JSON/EventJson.json,
 			);
 			target = 0BE721DB2D5B1FBB00ECE073 /* EventoraApp */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		0BC2EB402D7B10BF009842FB /* Exceptions for "EventoraApp" folder in "Compile Sources" phase from "EventoraApp" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 0BE721D82D5B1FBB00ECE073 /* Sources */;
+			membershipExceptions = (
+				JSON/EventJson.json,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0BE721DE2D5B1FBB00ECE073 /* EventoraApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				2B0E511E2D7AAEEA00D028B1 /* Exceptions for "EventoraApp" folder in "EventoraApp" target */,
+				0BC2EB402D7B10BF009842FB /* Exceptions for "EventoraApp" folder in "Compile Sources" phase from "EventoraApp" target */,
 			);
 			path = EventoraApp;
 			sourceTree = "<group>";

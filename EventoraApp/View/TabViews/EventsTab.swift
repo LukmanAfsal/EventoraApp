@@ -11,7 +11,7 @@ import SwiftUI
 struct EventsTab: View {
     @State private var currentIndex = 0
     @State private var displayIndex = 0
-    @State private var selectedCategory = "Music" // To track the selected category
+    @State private var selectedCategory = "Music"
     
     let categories = ["Music", "Comedy", "Theatre & Performing Arts", "Festival", "Celebrity & Influencer Events", "Nightlife & Clubbing"]
     
@@ -37,7 +37,7 @@ struct EventsTab: View {
             venue: "Quake Arena",
             city: "Hyderabad",
             price: "₹999 onwards",
-            posterImageName: "e2",
+            posterImageName: "e1",
             date: createDate(day: 22, month: 3, year: 2025)
         ),
         ConcertEvent(
@@ -83,8 +83,19 @@ struct EventsTab: View {
                         
                         TabView(selection: $displayIndex) {
                             ForEach(0..<displayEvents.count, id: \.self) { index in
-                                EventCard(event: displayEvents[index])
-                                    .tag(index)
+                                GeometryReader { geometry in
+                                    let minX = geometry.frame(in: .global).minX
+                                    let rotationAngle = minX / 10
+                                    
+                                    EventCard(event: displayEvents[index])
+                                        .rotation3DEffect(
+                                            Angle(degrees: -rotationAngle),
+                                            axis: (x: 0, y: 1, z: 0)
+                                        )
+                                        .scaleEffect(1 - abs(minX) / 1000)
+                                        .tag(index)
+                                }
+                                .frame(height: 500)
                             }
                         }
                         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
@@ -101,6 +112,7 @@ struct EventsTab: View {
                             currentIndex = min(newValue, events.count - 1)
                         }
                         
+                        // Page Indicators
                         HStack(spacing: 8) {
                             ForEach(0..<events.count, id: \.self) { index in
                                 Circle()
@@ -108,8 +120,8 @@ struct EventsTab: View {
                                     .frame(width: 8, height: 8)
                             }
                         }
-//                        .padding(.bottom, 16)
                     }
+
                     
                     // Category ScrollView
                     VStack(alignment: .leading) {
@@ -324,12 +336,10 @@ struct ArtistView: View {
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
                 .frame(height: 50)
-                .padding(.top, 8)
+                .padding()
         }
         .frame(width: 120)
-        .background(.yellow)
         .padding(.horizontal, 10)
-        .background(.green)
     }
 }
 
@@ -407,7 +417,7 @@ struct EventCard: View {
                     RoundedRectangle(cornerRadius: 20)
                         .fill(
                             LinearGradient(
-                                gradient: Gradient(colors: [.clear, .cgray.opacity(0.7)]),
+                                gradient: Gradient(colors: [.clear, .cpurple.opacity(0.7)]),
                                 startPoint: .top,
                                 endPoint: .bottom
                             )
@@ -440,6 +450,7 @@ struct EventCard: View {
                 Text("\(event.date) | \(event.location)")
                     .font(.subheadline)
                     .foregroundColor(.white.opacity(0.8))
+                    .bold()
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 36)
