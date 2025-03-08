@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct DiningTab: View {
+struct Sports: View {
     var body: some View {
         ZStack {
-            Color.black // Black background
+            Color.black
                 .ignoresSafeArea()
             VStack{
                 Text("Dining")
@@ -34,5 +34,5 @@ struct DiningTab: View {
 }
 
 #Preview {
-    DiningTab()
+    Sports()
 }

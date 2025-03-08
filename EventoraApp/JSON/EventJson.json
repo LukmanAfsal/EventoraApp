@@ -1,0 +1,98 @@
+{
+  "featuredEvents": [
+    {
+      "title": "M.M. Keeravani Live in Concert | Hyderabad",
+      "date": "22 Mar, 7PM",
+      "location": "Hyderabad",
+      "image": "e2"
+    },
+    {
+      "title": "Sample Event 2",
+      "date": "25 Mar, 8PM",
+      "location": "Mumbai",
+      "image": "e2"
+    },
+    {
+      "title": "Sample Event 3",
+      "date": "30 Mar, 6PM",
+      "location": "Delhi",
+      "image": "e3"
+    },
+    {
+      "title": "Sample Event 4",
+      "date": "5 Apr, 9PM",
+      "location": "Bangalore",
+      "image": "e4"
+    },
+    {
+      "title": "Sample Event 5",
+      "date": "10 Apr, 7PM",
+      "location": "Chennai",
+      "image": "e4"
+    }
+  ],
+  "categories": [
+    "Music",
+    "Comedy",
+    "Theatre & Performing Arts",
+    "Festival",
+    "Celebrity & Influencer Events",
+    "Nightlife & Clubbing"
+  ],
+  "artists": [
+    {
+      "name": "Prateek Kuhad",
+      "image": "e2"
+    },
+    {
+      "name": "Geetha Madhuri",
+      "image": "e3"
+    },
+    {
+      "name": "M.M. Keeravani",
+      "image": "e4"
+    },
+    {
+      "name": "Rishi Rikhiram",
+      "image": "e2"
+    }
+  ],
+  "concerts": [
+    {
+      "artistName": "Prateek Kuhad",
+      "eventTitle": "Prateek Kuhad live at Quake Arena",
+      "venue": "Quake Arena",
+      "city": "Hyderabad",
+      "price": "₹999 onwards",
+      "posterImageName": "e1",
+      "date": "2025-03-22T19:00:00Z"
+    },
+    {
+      "artistName": "Geetha Madhuri",
+      "eventTitle": "Geetha Madhuri Concert",
+      "venue": "Phoenix Arena",
+      "city": "Bengaluru",
+      "price": "₹1299 onwards",
+      "posterImageName": "e3",
+      "date": "2025-04-15T19:00:00Z"
+    },
+    {
+      "artistName": "M.M. Keeravani",
+      "eventTitle": "Musical Night with M.M. Keeravani",
+      "venue": "Shilpakala Vedika",
+      "city": "Hyderabad",
+      "price": "₹1499 onwards",
+      "posterImageName": "e4",
+      "date": "2025-05-05T19:00:00Z"
+    },
+    {
+      "artistName": "Rishi Rikhiram",
+      "eventTitle": "Rishi Rikhiram Live",
+      "venue": "Hard Rock Cafe",
+      "city": "Mumbai",
+      "price": "₹899 onwards",
+      "posterImageName": "e3",
+      "date": "2025-03-28T19:00:00Z"
+    }
+  ]
+}
