@@ -161,16 +161,16 @@ struct LoginScreen: View {
                             }
                         }) {
                             HStack {
-                                Image("google_logo") // Add a Google logo asset
+                                Image("goog")
                                     .resizable()
                                     .frame(width: 24, height: 24)
                                 Text("Sign in with Google")
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.black)
                             }
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color.blue)
-                            .cornerRadius(8)
+                            .background(Color.white)
+                            .cornerRadius(28)
                             .padding(.horizontal, 20)
                         }
                         

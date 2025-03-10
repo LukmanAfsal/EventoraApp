@@ -99,8 +99,8 @@ struct HomePageScreen: View {
                         switch selectedTab {
                         case .forYou: ForYouTabView()
                         case .events: EventsTab()
-                        case .techAndBusiness: MoviesTab()
-                        case .sport: DiningTab()
+                        case .techAndBusiness: TechAndBusiness()
+                        case .sport: Sports()
                         }
                         
                         // MARK: - Custom Tab Bar

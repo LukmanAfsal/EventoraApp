@@ -156,6 +156,10 @@ struct GradientLine: View {
             Text(title)
                 .foregroundStyle(.gray)
                 .fontWeight(.bold)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+                .fixedSize(horizontal: false, vertical: true)
+            
             Rectangle()
                 .foregroundStyle(
                     LinearGradient(gradient: Gradient(colors: [.white, .black]), startPoint: .leading, endPoint: .trailing)
@@ -257,6 +261,6 @@ extension Spotlight {
 }
 
 // MARK: - Preview
-#Preview {
-    ForYouTabView()
-}
+//#Preview {
+//    ForYouTabView()
+//}
