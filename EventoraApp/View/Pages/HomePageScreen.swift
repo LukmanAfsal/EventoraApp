@@ -135,6 +135,7 @@ struct HomePageScreen: View {
                     HomePageScreen()
                 case .profile:
                     ProfilePage()
+                    
                 }
             }
         }

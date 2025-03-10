@@ -96,6 +96,7 @@ final class AuthenticationManager {
         try Auth.auth().signOut()
     }
 }
+
 extension AuthenticationManager {
     func signInWithGoogle() async throws -> AuthDataResultModel {
         guard let clientID = FirebaseApp.app()?.options.clientID else {
