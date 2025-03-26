@@ -13,6 +13,7 @@ final class SignUpViewModel: ObservableObject {
     // MARK: - Published Properties
     @Published var email = ""
     @Published var password = ""
+    @Published var name = ""
     @Published var isSignInSuccess: Bool = false
     @Published var errorMessage: String? = nil
     
@@ -31,10 +32,8 @@ final class SignUpViewModel: ObservableObject {
     }
     
     // MARK: - Sign Up Function
-    /// Handles the sign-up process, including validation and Firebase authentication.
     func signUp() async {
-        // Validate fields
-        guard !email.isEmpty, !password.isEmpty else {
+        guard !name.isEmpty, !email.isEmpty, !password.isEmpty else {
             errorMessage = "Please fill in all fields."
             return
         }
@@ -49,9 +48,8 @@ final class SignUpViewModel: ObservableObject {
             return
         }
         
-        // Call Firebase to create a new user
         do {
-            let returnedUserData = try await AuthenticationManager.shared.createUser(email: email, password: password)
+            let returnedUserData = try await AuthenticationManager.shared.createUser(email: email, password: password, name: name)
             print("Sign Up Success")
             isSignInSuccess = true
             print(returnedUserData)

@@ -10,6 +10,8 @@ import SwiftUI
 struct ForgotPassPage: View {
     @StateObject private var viewModel = ForgotPasswordViewModel()
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var router: Router
+
 
     var body: some View {
         ZStack {
@@ -80,7 +82,7 @@ struct ForgotPassPage: View {
 
                 // Back to Login Button
                 Button(action: {
-                    dismiss()
+                    router.navigateBack()
                 }) {
                     Text("Back to Login")
                         .foregroundStyle(Color.purple)

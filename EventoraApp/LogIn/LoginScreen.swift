@@ -1,4 +1,5 @@
 import SwiftUI
+import GoogleSignInSwift
 import SwiftUICore
 
 struct LoginScreen: View {
@@ -12,7 +13,7 @@ struct LoginScreen: View {
     @EnvironmentObject private var router: Router
     
     var body: some View {
-        NavigationStack(path: $router.navPath) {
+        //NavigationStack(path: $router.navPath) {
             ZStack {
                 // MARK: - Background Video
                 VideoPlayerView(videoName: "PartyMood1")
@@ -59,7 +60,7 @@ struct LoginScreen: View {
                             }
                             .frame(height: 20)
                             .padding()
-                            .background(Color.cgray)
+                            .background(Color.cgray.opacity(0.93))
                             .foregroundStyle(.white)
                             .cornerRadius(8)
                             .padding(.horizontal, 20)
@@ -105,7 +106,7 @@ struct LoginScreen: View {
                             }
                             .frame(height: 20)
                             .padding()
-                            .background(Color.cgray)
+                            .background(Color.cgray.opacity(0.93))
                             .cornerRadius(8)
                             .padding(.horizontal, 20)
                             .overlay(
@@ -145,8 +146,8 @@ struct LoginScreen: View {
                                 .foregroundColor(.white)
                                 .padding()
                                 .frame(maxWidth: .infinity)
-                                .background(Color.purple)
-                                .cornerRadius(8)
+                                .background(Color.purple.opacity(0.95))
+                                .cornerRadius(28)
                                 .padding(.horizontal, 20)
                         }
                         .onChange(of: viewModel.isLogInSuccess) { _, _ in
@@ -155,13 +156,14 @@ struct LoginScreen: View {
                         }
                         
                         // MARK: - Google Sign-In Button
+                        
                         Button(action: {
                             Task {
                                 await viewModel.signInWithGoogle()
                             }
                         }) {
                             HStack {
-                                Image("goog")
+                                Image("google")
                                     .resizable()
                                     .frame(width: 24, height: 24)
                                 Text("Sign in with Google")
@@ -169,7 +171,7 @@ struct LoginScreen: View {
                             }
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color.white)
+                            .background(Color.white.opacity(0.92))
                             .cornerRadius(28)
                             .padding(.horizontal, 20)
                         }
@@ -190,8 +192,10 @@ struct LoginScreen: View {
                         
                         // MARK: - Forgot Password Button
                         HStack {
-                            NavigationLink(destination: ForgotPassPage()) {
-                                Text("Forgot Password?")
+                            Button(action: {
+                                router.navigate(to: .forgotPassword)
+                            }) {
+                                Text("Forgot Password")
                                     .foregroundStyle(Color.purple)
                                     .underline()
                                     .fontWeight(.semibold)
@@ -207,7 +211,7 @@ struct LoginScreen: View {
                             .foregroundStyle(.white)
                         
                         HStack {
-                            NavigationLink(destination: TermsOfService()) {
+                            NavigationLink(destination: CheckoutView()) {
                                 Text("Terms of Service")
                                     .underline()
                                     .foregroundStyle(.white)
@@ -226,7 +230,7 @@ struct LoginScreen: View {
                     .padding(.bottom, 20)
                 }
             }
-        }
+        //}
         .environmentObject(router)
     }
 }

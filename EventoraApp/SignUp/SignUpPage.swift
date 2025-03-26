@@ -193,6 +193,7 @@ struct SignUpPage: View {
                             showValidationErrors = true
                         } else {
                             Task {
+                                viewModel.name = fullName
                                 await viewModel.signUp()
                             }
                         }
@@ -206,9 +207,14 @@ struct SignUpPage: View {
                             .cornerRadius(8)
                             .padding(.horizontal, 20)
                     }
-                    .onChange(of: viewModel.isSignInSuccess) { oldValue, newValue in
-                        isLoggedIn = true
-                        router.navigateToRoot()
+                    
+                    // In your SignUpPage view
+                    .onChange(of: viewModel.isSignInSuccess) { _, newValue in
+                        if newValue {
+                            isLoggedIn = true
+                            // Add a small delay to ensure state changes are processed
+                            router.navigateToRoot()
+                        }
                     }
                     
                     // MARK: - Login Link

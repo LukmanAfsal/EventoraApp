@@ -12,7 +12,7 @@ struct LoginScreen2: View {
     // MARK: - AppStorage Properties
     @AppStorage("skippedOnboarding") var skippedOnboarding: Bool = false
     @AppStorage("isloggedin") var isLoggedIn: Bool = false
-    
+    @Environment(\.dismiss) var dismiss
     // MARK: - EnvironmentObject
     @EnvironmentObject private var router: Router
     
@@ -21,6 +21,26 @@ struct LoginScreen2: View {
             // MARK: - Background Video
             VideoPlayerView(videoName: "PartyMood1")
                 .edgesIgnoringSafeArea(.all)
+            
+            // MARK: - Back Button
+            VStack {
+                HStack {
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Image(systemName: "chevron.left")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.black.opacity(0.4))
+                            .clipShape(Circle())
+                    }
+                    .padding(.leading, 20)
+                    .padding(.top, 20)
+                    Spacer()
+                }
+                Spacer()
+            }
             
             // MARK: - Logo and Tagline
             VStack {
