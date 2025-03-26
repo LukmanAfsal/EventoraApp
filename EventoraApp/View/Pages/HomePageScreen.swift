@@ -100,7 +100,7 @@ struct HomePageScreen: View {
                         case .forYou: ForYouTabView()
                         case .events: EventsTab()
                         case .techAndBusiness: TechAndBusiness()
-                        case .sport: Sports()
+                        case .sport:  Sports()
                         }
                         
                         // MARK: - Custom Tab Bar
