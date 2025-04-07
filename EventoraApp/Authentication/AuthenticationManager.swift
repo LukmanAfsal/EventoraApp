@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 import FirebaseAuth
 import FirebaseCore
 import GoogleSignIn
@@ -96,29 +97,71 @@ final class AuthenticationManager {
         try Auth.auth().signOut()
     }
 }
+
+
 extension AuthenticationManager {
+    // Save user data to Firestore
+    private func saveUserData(uid: String, name: String?, email: String?, profilePicture: String?) async throws {
+        let db = Firestore.firestore()
+        let userData: [String: Any] = [
+            "name": name ?? "",
+            "email": email ?? "",
+            "profilePicture": profilePicture ?? "",
+            "dateOfBirth": "" // Initialize with empty string
+        ]
+        try await db.collection("users").document(uid).setData(userData, merge: true)
+    }
+    
+    // Update createUser method
+    func createUser(email: String, password: String, name: String) async throws -> AuthDataResultModel {
+        let authDataResults = try await Auth.auth().createUser(withEmail: email, password: password)
+        let uid = authDataResults.user.uid
+        
+        // Save user data to Firestore
+        try await saveUserData(uid: uid, name: name, email: email, profilePicture: nil)
+        
+        return AuthDataResultModel(user: authDataResults.user)
+    }
+    
+    // Update signInWithGoogle method
     func signInWithGoogle() async throws -> AuthDataResultModel {
         guard let clientID = FirebaseApp.app()?.options.clientID else {
             throw URLError(.badServerResponse)
         }
-
+        
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
-
+        
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let rootViewController = windowScene.windows.first?.rootViewController else {
             throw URLError(.cannotFindHost)
         }
-
+        
         let googleSignInResult = try await GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
         let user = googleSignInResult.user
-
+        
         guard let idToken = user.idToken?.tokenString else {
             throw URLError(.badServerResponse)
         }
-
+        
         let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: user.accessToken.tokenString)
         let authDataResult = try await Auth.auth().signIn(with: credential)
+        
+        let uid = authDataResult.user.uid
+        let name = user.profile?.name
+        let email = user.profile?.email
+        let profilePicture = user.profile?.imageURL(withDimension: 100)?.absoluteString
+        
+        // Check if the user already exists in Firestore
+        let db = Firestore.firestore()
+        let userDocument = try await db.collection("users").document(uid).getDocument()
+        
+        if !userDocument.exists {
+            // Save Google user data to Firestore only if the user doesn't exist
+            try await saveUserData(uid: uid, name: name, email: email, profilePicture: profilePicture)
+        }
+        
+        debugPrint(uid)
         return AuthDataResultModel(user: authDataResult.user)
     }
 }

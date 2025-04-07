@@ -30,7 +30,7 @@ final class LogInViewModel: ObservableObject {
     
     // MARK:- Login Function
     func login() async {
-        // MARK:- Field Validation
+        // Field validation
         guard !email.isEmpty, !password.isEmpty else {
             errorMessage = "Please fill in all fields."
             return
@@ -46,18 +46,18 @@ final class LogInViewModel: ObservableObject {
             return
         }
         
-        // MARK:- Firebase Login Attempt
+        // Firebase login attempt
         do {
             let returnedUserData = try await AuthenticationManager.shared.signIn(email: email, password: password)
             print("Login Success")
             isLogInSuccess.toggle()
             print(returnedUserData)
         } catch {
-            // MARK:- Error Handling
+            // Error handling
             if let error = error as NSError? {
                 switch error.code {
                 case AuthErrorCode.invalidCredential.rawValue:
-                    errorMessage = "email not found. Please Sign Up."
+                    errorMessage = "Email not found. Please Sign Up."
                 case AuthErrorCode.wrongPassword.rawValue:
                     errorMessage = "Incorrect password. Please try again."
                 default:

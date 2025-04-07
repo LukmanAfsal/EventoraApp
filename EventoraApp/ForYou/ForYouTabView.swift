@@ -12,32 +12,30 @@ struct ForYouTabView: View {
     @StateObject private var viewModel = ForYouViewModel()
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color.black
-                    .ignoresSafeArea()
-                ScrollView {
-                    LazyVStack {
-                        GradientLine(title: "IN THE SPOTLIGHT")
-                        
-                        if let spotlight = viewModel.eventResponse?.spotlight {
-                            NavigationLink(destination: EventDetailsPage(event: spotlight.toEventoraEvent())) {
-                                VStack {
-                                    SpotLight(titleMain: spotlight.title, viewModel: viewModel)
-                                    DatePlaceBar(eventLocation: spotlight.location, eventTime: spotlight.time, eventDate: spotlight.date)
-                                }
+        ZStack {
+            Color.black
+                .ignoresSafeArea()
+            ScrollView {
+                LazyVStack {
+                    GradientLine(title: "IN THE SPOTLIGHT")
+                    
+                    if let spotlight = viewModel.eventResponse?.spotlight {
+                        NavigationLink(destination: EventDetailsPage(event: spotlight.toEventoraEvent())) {
+                            VStack {
+                                SpotLight(titleMain: spotlight.title, viewModel: viewModel)
+                                DatePlaceBar(eventLocation: spotlight.location, eventTime: spotlight.time, eventDate: spotlight.date)
                             }
-                            .buttonStyle(PlainButtonStyle())
-                        } else {
-                            ProgressView()
                         }
-                        
-                        GradientLine(title: "THE BEST OF INDIA")
-                        
-                        BestOfIndia(viewModel: viewModel)
-                        
-                        GradientLine(title: "UPCOMING EVENTS")
+                        .buttonStyle(PlainButtonStyle())
+                    } else {
+                        ProgressView()
                     }
+                    
+                    GradientLine(title: "THE BEST OF INDIA")
+                    
+                    BestOfIndia(viewModel: viewModel)
+                    
+                    GradientLine(title: "UPCOMING EVENTS")
                 }
             }
         }

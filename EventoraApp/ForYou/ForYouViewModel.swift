@@ -40,7 +40,8 @@ class ForYouViewModel: ObservableObject {
     // MARK: - Load Events (API)
     /// Fetches event data from the API and updates the `eventResponse` property.
     func loadEvents() {
-        guard let url = URL(string: "https://run.mocky.io/v3/bed6a9d7-663b-45f6-9edb-6deb6cc10630") else {
+
+        guard let url = URL(string: "https://run.mocky.io/v3/ff2b93da-e565-4429-92e6-38fffd8944a3") else { 
             print("Invalid URL")
             return
         }
