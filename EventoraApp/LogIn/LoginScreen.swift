@@ -37,7 +37,8 @@ struct LoginScreen: View {
                         Image("img-Eventora3")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 270)
+                            .frame(minWidth: 230, minHeight: 60)
+                        
                         Text("Discover | Book | Experience")
                             .foregroundStyle(.white)
                     }
