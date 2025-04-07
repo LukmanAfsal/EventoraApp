@@ -17,7 +17,7 @@ struct HomePageScreen: View {
     @State private var showSignInView: Bool = false
     
     @State private var currentLocationName: String = "Current Location"
-    @State private var currentLocationArea: String = "Searching..."
+    @State private var currentLocationArea: String = "Searching...."
     
     @AppStorage("skippedOnboarding") var skippedOnboarding: Bool = false
     @AppStorage("isloggedin") var isLoggedIn: Bool = false
