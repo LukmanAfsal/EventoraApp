@@ -157,7 +157,7 @@ struct HomePageScreen: View {
             placemark.administrativeArea
         ].compactMap { $0 }.joined(separator: ", ")
         
-        currentLocationName = name
+        currentLocationName = placemark.locality ?? ""
         currentLocationArea = area
         
         // Save to UserDefaults

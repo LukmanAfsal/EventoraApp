@@ -3,6 +3,7 @@
 //  EventoraApp
 //
 //  Updated to fix location detection for Indian addresses
+//  Created by Abhinand K J on 25/03/25.
 //
 
 import SwiftUI
