@@ -2,6 +2,7 @@
 //  CheckoutPage.swift
 //  EventoraApp
 //
+//  Updated to fix location detection for Indian addresses
 //  Created by Abhinand K J on 25/03/25.
 //
 
@@ -17,11 +18,15 @@ struct CheckoutView: View {
     @State private var address: String = ""
     @State private var city: String = ""
     @State private var postalCode: String = ""
-    @State private var country: String = ""
+    @State private var country: String = "India" // Default to India
     @State private var selectedPayment: PaymentMethod = .creditCard
     @State private var isShowingConfirmation = false
     @State private var isLoadingLocation = false
     @State private var locationError: String?
+    
+    // MARK: - Parameters
+    var ticketPrice: Double
+    var seatCount: Int
     
     // MARK: - Models
     enum PaymentMethod: String, CaseIterable {
@@ -31,16 +36,15 @@ struct CheckoutView: View {
         case crypto = "Crypto"
     }
     
-    let cartItems = [
-        CartItem(name: "VIP Concert Ticket", price: 129.99, quantity: 2),
-        CartItem(name: "Merch Bundle", price: 45.00, quantity: 1)
-    ]
+    var cartItems: [CartItem] {
+        [CartItem(name: "Movie Ticket - Avengers: Endgame", price: ticketPrice/Double(seatCount), quantity: seatCount)]
+    }
     
     // MARK: - Location
     @StateObject private var locationManager = LocationManager()
     
     // MARK: - Computed Properties
-    var subtotal: Double { cartItems.reduce(0) { $0 + ($1.price * Double($1.quantity)) } }
+    var subtotal: Double { ticketPrice }
     var tax: Double { subtotal * 0.08 }
     var total: Double { subtotal + tax }
     
@@ -54,14 +58,6 @@ struct CheckoutView: View {
                 Spacer().frame(height: 110)
                 
                 VStack(spacing: 20) {
-                    // MARK: - Progress Steps
-                    HStack(spacing: 8) {
-                        ProgressStepView(label: "Cart", isActive: false)
-                        ProgressStepView(label: "Shipping", isActive: true)
-                        ProgressStepView(label: "Payment", isActive: false)
-                        ProgressStepView(label: "Confirm", isActive: false)
-                    }
-                    .padding(.horizontal, 24)
                     
                     // MARK: - Order Summary Card
                     ZStack {
@@ -277,13 +273,20 @@ struct CheckoutView: View {
                     if let placemark = placemark {
                         DispatchQueue.main.async {
                             self.address = [
-                                placemark.thoroughfare,
-                                placemark.subThoroughfare
+                                placemark.subThoroughfare,  // House number
+                                placemark.thoroughfare      // Street name
                             ].compactMap { $0 }.joined(separator: " ")
                             
-                            self.city = placemark.locality ?? ""
+                            self.city = placemark.locality ?? placemark.subAdministrativeArea ?? ""
                             self.postalCode = placemark.postalCode ?? ""
-                            self.country = placemark.country ?? ""
+                            self.country = placemark.country ?? "India"
+                            
+                            // Special handling for Indian addresses
+                            if self.country == "India" {
+                                if let administrativeArea = placemark.administrativeArea {
+                                    self.city = "\(self.city), \(administrativeArea)"
+                                }
+                            }
                         }
                     }
                 }
@@ -358,22 +361,6 @@ struct PaymentMethodButton: View {
     }
 }
 
-struct ProgressStepView: View {
-    let label: String
-    let isActive: Bool
-    
-    var body: some View {
-        VStack(spacing: 4) {
-            Circle()
-                .fill(isActive ? Color.blue : Color.gray.opacity(0.3))
-                .frame(width: 8, height: 8)
-            Text(label)
-                .font(.caption2)
-                .foregroundColor(isActive ? .blue : .gray)
-        }
-    }
-}
-
 // MARK: - Models
 struct CartItem: Identifiable, Codable {
     let id: UUID
@@ -389,7 +376,7 @@ struct CartItem: Identifiable, Codable {
     }
 }
 
-// MARK: - Location Manager (Updated Implementation)
+// MARK: - Updated Location Manager
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let locationManager = CLLocationManager()
     private var completion: ((Result<CLLocation, Error>) -> Void)?
@@ -397,8 +384,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     override init() {
         super.init()
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest // Highest accuracy
-        locationManager.distanceFilter = kCLDistanceFilterNone // Report all movements
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.distanceFilter = 10
     }
     
     func requestLocation(completion: @escaping (Result<CLLocation, Error>) -> Void) {
@@ -410,7 +397,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
                 case .notDetermined:
                     self.locationManager.requestWhenInUseAuthorization()
                 case .authorizedWhenInUse, .authorizedAlways:
-                    self.locationManager.startUpdatingLocation() // Start continuous updates
+                    self.locationManager.startUpdatingLocation()
                 case .denied, .restricted:
                     completion(.failure(CLError(.denied)))
                 @unknown default:
@@ -424,9 +411,22 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func reverseGeocode(location: CLLocation, completion: @escaping (CLPlacemark?, Error?) -> Void) {
         let geocoder = CLGeocoder()
-        geocoder.reverseGeocodeLocation(location) { placemarks, error in
+        let locale = Locale(identifier: "en_IN") // Force Indian locale
+        
+        geocoder.reverseGeocodeLocation(location, preferredLocale: locale) { placemarks, error in
+            if let error = error {
+                print("Geocoding error: \(error.localizedDescription)")
+                // Fallback to default geocoding if Indian locale fails
+                geocoder.reverseGeocodeLocation(location) { placemarks, error in
+                    DispatchQueue.main.async {
+                        completion(placemarks?.first, error)
+                    }
+                }
+                return
+            }
+            
             DispatchQueue.main.async {
-                completion(placemarks?.first, error)
+                completion(placemarks?.first, nil)
             }
         }
     }
@@ -434,7 +434,9 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         
-        // Only accept locations with accuracy better than 100 meters
+        print("Location received - Latitude: \(location.coordinate.latitude), Longitude: \(location.coordinate.longitude)")
+        print("Accuracy: \(location.horizontalAccuracy) meters")
+        
         if location.horizontalAccuracy < 100 {
             manager.stopUpdatingLocation()
             completion?(.success(location))
@@ -443,6 +445,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Location error: \(error.localizedDescription)")
         manager.stopUpdatingLocation()
         completion?(.failure(error))
         completion = nil
@@ -461,6 +464,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 // MARK: - Preview
 #Preview {
     NavigationStack {
-        CheckoutView()
+        CheckoutView(ticketPrice: 59.95, seatCount: 3)
     }
 }

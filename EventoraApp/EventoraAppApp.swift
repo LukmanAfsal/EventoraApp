@@ -19,6 +19,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct EventoraAppApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var router = Router()
+    @StateObject private var locationManager = ManagerLocation()
     
     var body: some Scene {
         WindowGroup {
@@ -27,6 +28,7 @@ struct EventoraAppApp: App {
             
             HomePageScreen()
                 .environmentObject(router)
+                .environmentObject(locationManager)
             //                } else {
             //                    LoginScreen()
             //                        .environmentObject(router)

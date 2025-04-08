@@ -6,32 +6,32 @@
 //
 
 import SwiftUI
+import CoreLocation
 
-// MARK: - HomePageScreen View
 struct HomePageScreen: View {
+    @EnvironmentObject private var router: Router
+    @EnvironmentObject private var locationManager: ManagerLocation
     
-    // MARK: - State Properties
     @State private var selectedTab: AuraTab = .forYou
     @State private var isLocationPresented = false
     @State private var showSignInView: Bool = false
     
-    // MARK: - EnvironmentObject
-    @EnvironmentObject private var router: Router
+    @State private var currentLocationName: String = "Current Location"
+    @State private var currentLocationArea: String = "Searching...."
     
-    // MARK: - AppStorage Properties
     @AppStorage("skippedOnboarding") var skippedOnboarding: Bool = false
     @AppStorage("isloggedin") var isLoggedIn: Bool = false
+    @AppStorage("savedLocationName") var savedLocationName: String = ""
+    @AppStorage("savedLocationArea") var savedLocationArea: String = ""
     
     var body: some View {
         NavigationStack(path: $router.navPath) {
             ZStack {
-                // MARK: - Background Gradient
                 BackgroundRadient(gradientColor: selectedTab.gradientColor)
                 
                 VStack {
-                    // MARK: - Header
+                    // Header
                     HStack {
-                        // Location Button
                         Button(action: {
                             isLocationPresented.toggle()
                         }) {
@@ -41,11 +41,11 @@ struct HomePageScreen: View {
                                     .font(.system(size: 35))
                                 
                                 VStack(alignment: .leading) {
-                                    Text("Koratty Infopark")
+                                    Text(currentLocationName)
                                         .font(.system(size: 20))
                                         .bold()
                                         .foregroundStyle(.white)
-                                    Text("Koratty, Kerala")
+                                    Text(currentLocationArea)
                                         .font(.system(size: 15))
                                         .bold()
                                         .foregroundStyle(.white)
@@ -60,7 +60,6 @@ struct HomePageScreen: View {
                         
                         Spacer()
                         
-                        // Profile Button
                         Button(action: {
                             router.navigate(to: .profile)
                         }) {
@@ -71,8 +70,8 @@ struct HomePageScreen: View {
                     }
                     .padding(.horizontal, 15)
                     
-                    // MARK: - Search Bar
-                    NavigationLink(destination: SearchPage()) {
+                    // Search Bar
+                    Button(action: {router.navigate(to: .searchpage)}) {
                         ZStack {
                             Rectangle()
                                 .frame(width: 375, height: 50)
@@ -94,37 +93,43 @@ struct HomePageScreen: View {
                         }
                     }
                     
-                    // MARK: - Tab Content
+                    // Tab Content
                     VStack(spacing: 0) {
                         switch selectedTab {
                         case .forYou: ForYouTabView()
                         case .events: EventsTab()
                         case .techAndBusiness: TechAndBusiness()
-                        case .sport: Sports()
+                        case .sport:  Sports()
                         }
                         
-                        // MARK: - Custom Tab Bar
                         CustomTabBar(selectedTab: $selectedTab)
                     }
                 }
                 .onAppear {
-                    // MARK: - Authentication Check
                     let authUser = try? AuthenticationManager.shared.getAuthenticatedUser()
-                    // self.showSignInView = authUser == nil ? true : false
+                    
+                    // Load saved location if available
+                    if !savedLocationName.isEmpty {
+                        currentLocationName = savedLocationName
+                        currentLocationArea = savedLocationArea
+                    }
                 }
                 
-                // MARK: - Login Screen Overlay
                 if (isLoggedIn == false && skippedOnboarding == false) && skippedOnboarding == false {
                     LoginScreen(skippedOnboarding: $skippedOnboarding, loginSuccessful: $isLoggedIn)
                 }
             }
-            // MARK: - Full Screen Cover for Location Detail
             .fullScreenCover(isPresented: $isLocationPresented) {
                 LocationDetailPage()
+                    .environmentObject(router)
+                    .environmentObject(locationManager)
+            }
+            .onChange(of: locationManager.placemark) { newPlacemark in
+                if let placemark = newPlacemark {
+                    updateLocationDisplay(with: placemark)
+                }
             }
             .toolbarVisibility(.hidden, for: .navigationBar)
-            
-            // MARK: - Navigation Destinations
             .navigationDestination(for: NavDestination.self) { destination in
                 switch destination {
                 case .login:
@@ -137,16 +142,32 @@ struct HomePageScreen: View {
                     ProfilePage()
                 case .forgotPassword:
                     ForgotPassPage()
-                    
+                case .searchpage:
+                    SearchPage()
                 }
             }
         }
         .environmentObject(router)
     }
+    
+    private func updateLocationDisplay(with placemark: CLPlacemark) {
+        let name = placemark.name ?? "Current Location"
+        let area = [
+            placemark.locality,
+            placemark.administrativeArea
+        ].compactMap { $0 }.joined(separator: ", ")
+        
+        currentLocationName = placemark.locality ?? ""
+        currentLocationArea = area
+        
+        // Save to UserDefaults
+        savedLocationName = name
+        savedLocationArea = area
+    }
 }
 
-// MARK: - Preview
 #Preview {
     HomePageScreen()
         .environmentObject(Router())
+        .environmentObject(ManagerLocation())
 }

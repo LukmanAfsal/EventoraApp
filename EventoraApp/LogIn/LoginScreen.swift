@@ -211,7 +211,7 @@ struct LoginScreen: View {
                             .foregroundStyle(.white)
                         
                         HStack {
-                            NavigationLink(destination: CheckoutView()) {
+                            NavigationLink(destination: TermsOfService()) {
                                 Text("Terms of Service")
                                     .underline()
                                     .foregroundStyle(.white)

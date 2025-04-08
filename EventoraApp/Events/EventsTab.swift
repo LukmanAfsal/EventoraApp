@@ -24,11 +24,11 @@ struct EventsTab: View {
     ]
     
     let artists = [
-            (name: "Prateek Kuhad", image: "e2"),
-            (name: "Geetha Madhuri", image: "e3"),
-            (name: "M.M. Keeravani", image: "e4"),
-            (name: "Rishi Rikhiram", image: "e2")
-        ]
+        (name: "Prateek Kuhad", image: "e2"),
+        (name: "Geetha Madhuri", image: "e3"),
+        (name: "M.M. Keeravani", image: "e4"),
+        (name: "Rishi Rikhiram", image: "e2")
+    ]
     
     let concerts = [
         ConcertEvent(
@@ -76,55 +76,61 @@ struct EventsTab: View {
             
             ScrollView {
                 LazyVStack(spacing: 20) {
-                    GradientLine(title: "FEATURED EVENTS")
-                    
-                    ZStack(alignment: .bottom) {
-                        let displayEvents = events + [events[0]]
+                    // Featured Events Section
+                    VStack(spacing: 0) {
+                        GradientLine(title: "FEATURED EVENTS")
+                            .padding(.horizontal, 16)
                         
-                        TabView(selection: $displayIndex) {
-                            ForEach(0..<displayEvents.count, id: \.self) { index in
-                                GeometryReader { geometry in
-                                    let minX = geometry.frame(in: .global).minX
-                                    let rotationAngle = minX / 10
-                                    
-                                    EventCard(event: displayEvents[index])
-                                        .rotation3DEffect(
-                                            Angle(degrees: -rotationAngle),
-                                            axis: (x: 0, y: 1, z: 0)
-                                        )
-                                        .scaleEffect(1 - abs(minX) / 1000)
-                                        .tag(index)
+                        ZStack(alignment: .bottom) {
+                            let displayEvents = events + [events[0]]
+                            
+                            TabView(selection: $displayIndex) {
+                                ForEach(0..<displayEvents.count, id: \.self) { index in
+                                    GeometryReader { geometry in
+                                        let minX = geometry.frame(in: .global).minX
+                                        let rotationAngle = minX / 10
+                                        
+                                        EventCard(event: displayEvents[index])
+                                            .rotation3DEffect(
+                                                Angle(degrees: -rotationAngle),
+                                                axis: (x: 0, y: 1, z: 0)
+                                            )
+                                            .scaleEffect(1 - abs(minX) / 1000)
+                                            .tag(index)
+                                    }
+                                    .frame(height: 500)
                                 }
-                                .frame(height: 500)
                             }
-                        }
-                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                        .frame(height: 500)
-                        .onChange(of: displayIndex) { oldValue, newValue in
-                            if newValue == events.count {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    withAnimation(nil) {
-                                        displayIndex = 0
+                            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                            .frame(height: 500)
+                            .onChange(of: displayIndex) { oldValue, newValue in
+                                if newValue == events.count {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        withAnimation(nil) {
+                                            displayIndex = 0
+                                        }
                                     }
                                 }
+                                
+                                currentIndex = min(newValue, events.count - 1)
                             }
                             
-                            currentIndex = min(newValue, events.count - 1)
-                        }
-                        
-                        // Page Indicators
-                        HStack(spacing: 8) {
-                            ForEach(0..<events.count, id: \.self) { index in
-                                Circle()
-                                    .fill(currentIndex == index ? Color.white : Color.gray.opacity(0.5))
-                                    .frame(width: 8, height: 8)
+                            // Page Indicators
+                            HStack(spacing: 8) {
+                                ForEach(0..<events.count, id: \.self) { index in
+                                    Circle()
+                                        .fill(currentIndex == index ? Color.white : Color.gray.opacity(0.5))
+                                        .frame(width: 8, height: 8)
+                                }
                             }
+                            .padding(.bottom, 16)
                         }
                     }
-
                     
-                    // Category ScrollView
-                    VStack(alignment: .leading) {
+                    // Category Section
+                    VStack(spacing: 0) {
+                        GradientLine(title: "CATEGORIES")
+                            .padding(.horizontal, 16)
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 10) {
@@ -140,48 +146,43 @@ struct EventsTab: View {
                                     )
                                 }
                             }
-                            .padding(.horizontal, 8)
-                            .padding(.bottom, 12)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 12)
                         }
                     }
                     
-                    
-                    GradientLine(title: "ARTISTS")
-                    
-                            ZStack {
-                                Color.black.edgesIgnoringSafeArea(.all)
-                                
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(spacing: 0) {
-                                        ForEach(artists, id: \.name) { artist in
-                                            ArtistView(name: artist.name, imageName: artist.image)
-                                        }
-                                    }
-                                    .padding(.horizontal, 10)
+                    // Artists Section
+                    VStack(spacing: 0) {
+                        GradientLine(title: "ARTISTS")
+                            .padding(.horizontal, 16)
+                        
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 0) {
+                                ForEach(artists, id: \.name) { artist in
+                                    ArtistView(name: artist.name, imageName: artist.image)
+                                        .padding(.leading, 16)
                                 }
                             }
+                            .padding(.trailing, 16)
+                        }
+                        .padding(.vertical, 12)
+                    }
                     
-                    
-                    
-                    GradientLine(title: "ALL EVENTS")
-                    
-                    
-                    ScrollView {
+                    // All Events Section
+                    VStack(spacing: 0) {
+                        GradientLine(title: "ALL EVENTS")
+                            .padding(.horizontal, 16)
+                        
                         LazyVStack(spacing: 24) {
                             ForEach(concerts, id: \.id) { concert in
                                 ConcertCardView(concert: concert)
-                                    .padding(.horizontal)
+                                    .padding(.horizontal, 16)
                             }
                         }
                         .padding(.vertical, 20)
-                        .background(Color.black.edgesIgnoringSafeArea(.all))
                     }
-                    .background(Color.black.edgesIgnoringSafeArea(.all))
-                    
-                    
-                    
                 }
-                .padding()
+                .padding(.vertical, 16)
             }
         }
     }
