@@ -195,7 +195,7 @@ struct TicketSelectionView: View {
         .toolbarBackground(Material.regularMaterial, for: .navigationBar)
         .toolbarTitleDisplayMode(.inline)
         .sheet(isPresented: $showingCheckout) {
-            CheckoutView()
+            CheckoutView(ticketPrice: 199.00, seatCount: 10)
         }
     }
     
@@ -340,7 +340,7 @@ struct TicketType: Identifiable {
             price: 499,
             distance: "5 km away",
             description: "This is a sample event description. Join us for an amazing experience!",
-            artist: Artist(name: "Sample Artist", image: "https://assetscdn1.paytm.com/images/cinema/Kunchacko-Boban-ed0ea550-9185-11eb-b324-e3ae738e1ebb.jpg?format=webp&imwidth=64")
+            artist: Artist(name: "Sample Artist", image: "https://assetscdn1.paytm.com/images/cinema/Kunchacko-Boban-ed0ea550-9185-11eb-b324-e3ae738e1ebb.jpg?format=webp&imwidth=64"), seatingType: 2
         )
         
         TicketSelectionView(event: sampleEvent)

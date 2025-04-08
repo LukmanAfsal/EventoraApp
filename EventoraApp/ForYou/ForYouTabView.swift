@@ -253,7 +253,7 @@ extension Spotlight {
             price: self.price,
             distance: self.distance,
             description: self.description,
-            artist: self.artist
+            artist: self.artist, seatingType: 4
         )
     }
 }

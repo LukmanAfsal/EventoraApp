@@ -206,7 +206,7 @@ struct BookingDetails {
             price: 499,
             distance: "5 km away",
             description: "Annual technology conference featuring industry leaders and workshops.",
-            artist: Artist(name: "Tech Leaders", image: "")
+            artist: Artist(name: "Tech Leaders", image: ""), seatingType: 1
         )
         
         let bookingDetails = BookingDetails(

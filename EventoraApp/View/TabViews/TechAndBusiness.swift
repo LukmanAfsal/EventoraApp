@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct TechAndBusiness: View {
+    
+    @EnvironmentObject private var router: Router
+    
     var body: some View {
         ZStack {
             Color.black
@@ -17,6 +20,9 @@ struct TechAndBusiness: View {
                 .foregroundColor(.white)
                 .font(.title)
                 .bold()
+                .onTapGesture {
+                    router.navigate(to: .ticketselectionview(event: EvntoraEvent.samplePreviewEvent))
+                }
         }
     }
 }
