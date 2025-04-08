@@ -71,7 +71,7 @@ struct HomePageScreen: View {
                     .padding(.horizontal, 15)
                     
                     // Search Bar
-                    NavigationLink(destination: SearchPage()) {
+                    Button(action: {router.navigate(to: .searchpage)}) {
                         ZStack {
                             Rectangle()
                                 .frame(width: 375, height: 50)
@@ -142,6 +142,8 @@ struct HomePageScreen: View {
                     ProfilePage()
                 case .forgotPassword:
                     ForgotPassPage()
+                case .searchpage:
+                    SearchPage()
                 }
             }
         }
