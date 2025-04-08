@@ -35,4 +35,5 @@ public enum NavDestination: Codable, Hashable {
     case home
     case profile
     case forgotPassword
+    case searchpage
 }

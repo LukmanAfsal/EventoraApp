@@ -7,11 +7,25 @@
 
 import SwiftUI
 
+
 struct SearchPage: View {
+    @EnvironmentObject private var router: Router
+
     var body: some View {
-        Text("Search Page") +
-        Text(" Index")
-            .bold()
+        ZStack {
+            Color.black
+                .ignoresSafeArea()
+            HStack{
+                BackButton {
+                    router.navigateToRoot()
+                }
+                VStack{
+                    Text("Search Page") +
+                    Text(" Index")
+                        .bold()
+                }
+            }
+        }
     }
 }
 

@@ -258,7 +258,7 @@ extension Spotlight {
     }
 }
 
-// MARK: - Preview
-//#Preview {
-//    ForYouTabView()
-//}
+//MARK: - Preview
+#Preview {
+    ForYouTabView()
+}

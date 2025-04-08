@@ -7,44 +7,29 @@
 
 import SwiftUI
 
-// MARK: - LocationDetailPage View
 struct LocationDetailPage: View {
-    // MARK: - Environment
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject private var router: Router
+    @EnvironmentObject private var locationManager: ManagerLocation
     
-    // MARK: - State
     @State private var locationName: String = ""
+    @State private var showAlert = false
     
-    // MARK: - Data
     let places = ["Delhi NCR", "Hydrabad", "Kolkata", "Pune", "Goa", "Bangaluru", "Mumbai", "Chandigarh", "Ahmedabadh", "Chennai"]
     let indianCities: [String] = [
-        "Mumbai",
-        "Delhi",
-        "Bangalore",
-        "Hyderabad",
-        "Chennai",
-        "Kolkata",
-        "Ahmedabad",
-        "Pune",
-        "Jaipur",
-        "Lucknow",
-        "Kochi",
-        "Bhopal",
-        "Chandigarh",
-        "Visakhapatnam",
-        "Thiruvananthapuram"
+        "Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai",
+        "Kolkata", "Ahmedabad", "Pune", "Jaipur", "Lucknow",
+        "Kochi", "Bhopal", "Chandigarh", "Visakhapatnam", "Thiruvananthapuram"
     ]
     
-    // MARK: - Layout
     let columns = [GridItem(.fixed(100)), GridItem(.fixed(100))]
     
     var body: some View {
         ZStack {
-            // MARK: - Background
             Color.black.edgesIgnoringSafeArea(.all)
             
             VStack {
-                // MARK: - Header
+                // Header
                 HStack {
                     Button(action: { dismiss() }) {
                         Image(systemName: "chevron.down")
@@ -63,7 +48,7 @@ struct LocationDetailPage: View {
                 }
                 .padding(.horizontal, -2)
                 
-                // MARK: - Search Field
+                // Search Field
                 TextField(
                     "",
                     text: $locationName,
@@ -80,13 +65,20 @@ struct LocationDetailPage: View {
                         .padding(.horizontal, 10)
                 )
                 
-                // MARK: - Current Location Button
-                Button(action: {}) {
+                // Current Location Button
+                Button(action: {
+                    locationManager.requestLocation()
+                }) {
                     HStack {
-                        Image(systemName: "location.viewfinder")
-                            .bold()
-                            .font(.system(size: 23))
-                            .foregroundStyle(.white)
+                        if locationManager.isLoading {
+                            ProgressView()
+                                .tint(.white)
+                        } else {
+                            Image(systemName: "location.viewfinder")
+                                .bold()
+                                .font(.system(size: 23))
+                                .foregroundStyle(.white)
+                        }
                         
                         Text("Use Current Location")
                             .bold()
@@ -109,8 +101,18 @@ struct LocationDetailPage: View {
                     .padding(.top, 13)
                     .padding(.horizontal, 10)
                 }
+                .alert("Location Error", isPresented: $showAlert) {
+                    Button("OK", role: .cancel) { }
+                    Button("Settings") {
+                        if let url = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(url)
+                        }
+                    }
+                } message: {
+                    Text(locationManager.error ?? "Unknown error occurred")
+                }
                 
-                // MARK: - Popular Cities Section
+                // Popular Cities Section
                 HStack {
                     Text("Popular cities")
                         .bold()
@@ -138,7 +140,7 @@ struct LocationDetailPage: View {
                     .padding(.top, 20)
                 }
                 
-                // MARK: - All Cities Section
+                // All Cities Section
                 HStack {
                     Text("All cities")
                         .bold()
@@ -152,10 +154,26 @@ struct LocationDetailPage: View {
                 Spacer()
             }
         }
+        .alert("Location Error", isPresented: $showAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(locationManager.error ?? "Unknown error occurred")
+        }
+        .onChange(of: locationManager.error) { error in
+            if error != nil {
+                showAlert = true
+            }
+        }
+        .onChange(of: locationManager.placemark) { newPlacemark in
+            if newPlacemark != nil {
+                dismiss()
+            }
+        }
     }
 }
 
-// MARK: - Preview
 #Preview {
     LocationDetailPage()
+        .environmentObject(Router())
+        .environmentObject(ManagerLocation())
 }
