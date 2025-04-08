@@ -47,8 +47,11 @@ struct SignUpPage: View {
                 VStack {
                     Image("img-Eventora3")
                         .resizable()
+                        .scaledToFit()
+                        .frame(width: 230, height: 60)
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 270)
+                        
+//                        .fixedSize()
                     Text("Discover | Book | Experience")
                         .foregroundStyle(.white)
                 }
@@ -71,7 +74,7 @@ struct SignUpPage: View {
                         }
                         .frame(height: 20)
                         .padding()
-                        .background(Color.cgray)
+                        .background(Color.cgray.opacity(0.93))
                         .foregroundStyle(.white)
                         .cornerRadius(8)
                         .padding(.horizontal, 20)
@@ -98,7 +101,7 @@ struct SignUpPage: View {
                         }
                         .frame(height: 20)
                         .padding()
-                        .background(Color.cgray)
+                        .background(Color.cgray.opacity(0.93))
                         .foregroundStyle(.white)
                         .cornerRadius(8)
                         .padding(.horizontal, 20)
@@ -128,7 +131,7 @@ struct SignUpPage: View {
                         }
                         .frame(height: 20)
                         .padding()
-                        .background(Color.cgray)
+                        .background(Color.cgray.opacity(0.93))
                         .foregroundStyle(.white)
                         .cornerRadius(8)
                         .padding(.horizontal, 20)
@@ -155,7 +158,7 @@ struct SignUpPage: View {
                         }
                         .frame(height: 20)
                         .padding()
-                        .background(Color.cgray)
+                        .background(Color.cgray.opacity(0.93))
                         .foregroundStyle(.white)
                         .cornerRadius(8)
                         .padding(.horizontal, 20)
@@ -203,7 +206,7 @@ struct SignUpPage: View {
                             .foregroundColor(.white)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color.purple)
+                            .background(Color.purple.opacity(0.95))
                             .cornerRadius(8)
                             .padding(.horizontal, 20)
                     }

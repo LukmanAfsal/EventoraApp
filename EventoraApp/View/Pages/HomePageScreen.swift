@@ -144,6 +144,13 @@ struct HomePageScreen: View {
                     ForgotPassPage()
                 case .searchpage:
                     SearchPage()
+                case .ticketselectionview(let event):
+                    if event.seatingType == 1{
+                        TicketSelectionView(event: event)
+                    }else{
+                        BookingView()
+                    }
+                    
                 }
             }
         }
